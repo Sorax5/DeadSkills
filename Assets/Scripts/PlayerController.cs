@@ -11,8 +11,10 @@ public class PlayerController : MonoBehaviour
     private const string SPRINT_ACTION = "Sprint";
 
     public event Action OnJump;
-    public event Action OnCrouch;
-    public event Action OnSprint;
+    public event Action<bool> OnCrouch;
+    public event Action<bool> OnSprint;
+
+    public float Height => characterController.height;
 
     [Header("Movement")]
     [SerializeField] private float speed = 6.0f;
@@ -21,8 +23,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotationSpeed = 0.1f;
 
     [Header("Crouch")]
-    [SerializeField] private float crouchHeight = 1.0f;
-    [SerializeField] private float standingHeight = 2.0f;
+    [SerializeField] public float crouchHeight = 1.0f;
+    [SerializeField] public float standingHeight = 2.0f;
+
+    [SerializeField] private float crouchStepHeight = 0.3f;
+    [SerializeField] private float uncrouchStepHeight = 0.5f;
+
     [SerializeField] private float crouchTransitionSpeed = 5.0f;
     [SerializeField] private float crouchSpeedMultiplier = 0.5f;
 
@@ -30,7 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeedMultiplier = 1.5f;
 
     [Header("References")]
-    [SerializeField] private GameObject rendererObject;
     [SerializeField] private Transform cameraTransform;
 
     private CharacterController characterController;
@@ -46,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private bool wasSprinting;
+    private bool wasCrouching;
 
     private void Awake()
     {
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
         }
 
         wasSprinting = false;
+        wasCrouching = characterController != null && characterController.height <= (crouchHeight + 0.01f);
     }
 
     private void Update()
@@ -123,18 +130,17 @@ public class PlayerController : MonoBehaviour
 
     private void HandleCrouch()
     {
-        bool shouldCrouch = (crouchAction != null && crouchAction.IsPressed() ) || !canUncrouch();
+        bool requestedCrouch = (crouchAction != null && crouchAction.IsPressed());
+        bool shouldCrouch = requestedCrouch || !canUncrouch();
+
         float transitionSpeed = crouchTransitionSpeed * Time.deltaTime;
         characterController.height = Mathf.Lerp(characterController.height, shouldCrouch ? crouchHeight : standingHeight, transitionSpeed);
+        characterController.stepOffset = Mathf.Lerp(characterController.stepOffset, shouldCrouch ? crouchStepHeight : uncrouchStepHeight, transitionSpeed);
 
-        if (rendererObject != null)
+        if (shouldCrouch != wasCrouching)
         {
-            rendererObject.transform.localScale = new Vector3(1, characterController.height / standingHeight, 1);
-        }
-
-        if (shouldCrouch)
-        {
-            OnCrouch?.Invoke();
+            OnCrouch?.Invoke(shouldCrouch);
+            wasCrouching = shouldCrouch;
         }
     }
 
@@ -164,11 +170,11 @@ public class PlayerController : MonoBehaviour
     private void HandleSprint()
     {
         bool isSprinting = (sprintAction != null && sprintAction.IsPressed());
-        if (isSprinting && !wasSprinting)
+        if (isSprinting != wasSprinting)
         {
-            OnSprint?.Invoke();
+            OnSprint?.Invoke(isSprinting);
+            wasSprinting = isSprinting;
         }
-        wasSprinting = isSprinting;
     }
 
     private void HandleRotation()
