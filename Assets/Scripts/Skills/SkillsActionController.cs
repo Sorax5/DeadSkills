@@ -24,6 +24,11 @@ public class SkillsActionController : MonoBehaviour
     [Header("Sprint")]
     [SerializeField] public float SprintSpeedMultiplier = 1.5f;
 
+    [Header("Slide")]
+    [SerializeField] public float SlideDuration = 0.8f;
+    [SerializeField] public float SlideSpeedMultiplier = 1.8f;
+    [SerializeField] public float SlideCooldown = 0.5f;
+
     [Header("References")]
     [SerializeField] public Transform cameraTransform;
 
@@ -35,6 +40,9 @@ public class SkillsActionController : MonoBehaviour
     public SpeedModifier SpeedModifiers = new SpeedModifier();
     public Vector3 velocity;
 
+    // Indicates whether a slide is currently active
+    public bool IsSliding { get; set; } = false;
+
     private void Awake()
     {
         CharacterController = GetComponent<CharacterController>();
@@ -43,6 +51,7 @@ public class SkillsActionController : MonoBehaviour
         actions.Add(new CrouchSkill(this, PlayerInput.actions["Crouch"]));
         actions.Add(new JumpSkill(this, PlayerInput.actions["Jump"]));
         actions.Add(new SprintSkill(this, PlayerInput.actions["Sprint"]));
+        actions.Add(new SlideSkill(this, PlayerInput.actions["Crouch"], PlayerInput.actions["Sprint"]));
 
         if (cameraTransform == null && Camera.main != null)
         {
@@ -63,6 +72,18 @@ public class SkillsActionController : MonoBehaviour
         if (actions.Contains(action))
         {
             actions.Remove(action);
+        }
+    }
+
+    // New helper to enable/disable actions by their identifier
+    public void SetActionActive(string identifier, bool active)
+    {
+        foreach (var action in actions)
+        {
+            if (action.Identifier == identifier)
+            {
+                action.IsActive = active;
+            }
         }
     }
 
