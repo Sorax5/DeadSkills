@@ -21,6 +21,12 @@ public class LightningSkill : SkillAction
         if (lightningAction != null && lightningAction.WasPressedThisFrame() && !Controller.ElectrifyController.IsCurrentlyElectrified)
         {
             Controller.ElectrifyController.EnableElectrify();
+            Controller.PlayerEffect.PlayerElectricityEffect();
+        }
+
+        if(Controller.ElectrifyController.IsCurrentlyElectrified)
+        {
+            Controller.velocity = new Vector3(0, Controller.velocity.y, 0);
         }
     }
 }

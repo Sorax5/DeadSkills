@@ -27,6 +27,7 @@ public class SkillsActionController : MonoBehaviour
     [Header("References")]
     [SerializeField] public Transform CameraTransform;
     [SerializeField] public ElectrifyController ElectrifyController;
+    [SerializeField] public PlayerEffect PlayerEffect;
 
     private List<SkillAction> actions = new List<SkillAction>();
 

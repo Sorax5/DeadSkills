@@ -1,10 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(ElectrifiableObject))]
 public class ElectricityEffect : MonoBehaviour
 {
     [SerializeField] private GameObject renderObject;
+    private ElectrifiableObject electrifiableObject;
 
+    private void Awake()
+    {
+        electrifiableObject = GetComponent<ElectrifiableObject>();
+        electrifiableObject.OnObjectElectrified.AddListener(PlayEffect);
+    }
 
     public void PlayEffect()
     {
