@@ -24,13 +24,10 @@ public class SkillsActionController : MonoBehaviour
     [Header("Sprint")]
     [SerializeField] public float SprintSpeedMultiplier = 1.5f;
 
-    [Header("Slide")]
-    [SerializeField] public float SlideDuration = 0.8f;
-    [SerializeField] public float SlideSpeedMultiplier = 1.8f;
-    [SerializeField] public float SlideCooldown = 0.5f;
-
     [Header("References")]
-    [SerializeField] public Transform cameraTransform;
+    [SerializeField] public Transform CameraTransform;
+    [SerializeField] public ElectrifyController ElectrifyController;
+    [SerializeField] public PlayerEffect PlayerEffect;
 
     private List<SkillAction> actions = new List<SkillAction>();
 
@@ -40,7 +37,6 @@ public class SkillsActionController : MonoBehaviour
     public SpeedModifier SpeedModifiers = new SpeedModifier();
     public Vector3 velocity;
 
-    // Indicates whether a slide is currently active
     public bool IsSliding { get; set; } = false;
 
     private void Awake()
@@ -51,11 +47,11 @@ public class SkillsActionController : MonoBehaviour
         actions.Add(new CrouchSkill(this, PlayerInput.actions["Crouch"]));
         actions.Add(new JumpSkill(this, PlayerInput.actions["Jump"]));
         actions.Add(new SprintSkill(this, PlayerInput.actions["Sprint"]));
-        actions.Add(new SlideSkill(this, PlayerInput.actions["Crouch"], PlayerInput.actions["Sprint"]));
+        actions.Add(new LightningSkill(this, PlayerInput.actions["Attack"]));
 
-        if (cameraTransform == null && Camera.main != null)
+        if (CameraTransform == null && Camera.main != null)
         {
-            cameraTransform = Camera.main.transform;
+            CameraTransform = Camera.main.transform;
         }
     }
 
@@ -101,13 +97,13 @@ public class SkillsActionController : MonoBehaviour
 
     private void HandleRotation()
     {
-        if (cameraTransform == null)
+        if (CameraTransform == null)
         {
             return;
         }
 
         ProcessGround();
-        Vector3 forward = cameraTransform.forward;
+        Vector3 forward = CameraTransform.forward;
         forward.y = 0;
         if (forward.sqrMagnitude > 0.01f)
         {
