@@ -5,6 +5,7 @@ using UnityEngine;
 public class ElectricityEffect : MonoBehaviour
 {
     [SerializeField] private GameObject renderObject;
+    [SerializeField] private ParticleSystem electricityParticles;
     private ElectrifiableObject electrifiableObject;
 
     private void Awake()
@@ -21,6 +22,11 @@ public class ElectricityEffect : MonoBehaviour
     private IEnumerator ElectricityCoroutine()
     {
         Renderer renderer = renderObject.GetComponent<Renderer>();
+        if (electricityParticles != null)
+        {
+            electricityParticles.Play();
+        }
+
         if (renderer != null)
         {
             Color originalColor = renderer.material.color;
