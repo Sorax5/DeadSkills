@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
     private const string MOVE_ACTION = "Move";
     private const string JUMP_ACTION = "Jump";
     private const string CROUCH_ACTION = "Crouch";
+    private const string SPRINT_ACTION = "Sprint";
 
     public event Action OnJump;
     public event Action OnCrouch;
+    public event Action OnSprint;
 
     [Header("Movement")]
     [SerializeField] private float speed = 6.0f;
@@ -24,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float crouchTransitionSpeed = 5.0f;
     [SerializeField] private float crouchSpeedMultiplier = 0.5f;
 
+    [Header("Sprint")]
+    [SerializeField] private float sprintSpeedMultiplier = 1.5f;
+
     [Header("References")]
     [SerializeField] private GameObject rendererObject;
     [SerializeField] private Transform cameraTransform;
@@ -35,10 +40,12 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction crouchAction;
+    private InputAction sprintAction;
     #endregion
 
     private Vector3 velocity;
     private bool isGrounded;
+    private bool wasSprinting;
 
     private void Awake()
     {
@@ -48,11 +55,14 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions.FindAction(MOVE_ACTION);
         jumpAction = playerInput.actions.FindAction(JUMP_ACTION);
         crouchAction = playerInput.actions.FindAction(CROUCH_ACTION);
+        sprintAction = playerInput.actions.FindAction(SPRINT_ACTION);
 
         if (cameraTransform == null && Camera.main != null)
         {
             cameraTransform = Camera.main.transform;
         }
+
+        wasSprinting = false;
     }
 
     private void Update()
@@ -60,6 +70,9 @@ public class PlayerController : MonoBehaviour
         ProcessGround();
 
         Vector2 input = ReadMoveInput();
+
+        HandleSprint();
+
         Vector3 horizontalVelocity = ComputeHorizontalVelocity(input);
 
         HandleJump();
@@ -91,7 +104,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 ComputeHorizontalVelocity(Vector2 input)
     {
         Vector3 horizontal = transform.right * input.x + transform.forward * input.y;
-        float speedMultiplier = (crouchAction != null && crouchAction.IsPressed()) ? crouchSpeedMultiplier : 1f;
+
+        bool isCrouching = characterController != null && characterController.height <= (crouchHeight + 0.01f);
+        float crouchMultiplier = isCrouching ? crouchSpeedMultiplier : 1f;
+        float sprintMultiplier = (sprintAction != null && sprintAction.IsPressed()) ? sprintSpeedMultiplier : 1f;
+        float speedMultiplier = crouchMultiplier * sprintMultiplier;
         return horizontal * speed * speedMultiplier;
     }
 
@@ -99,7 +116,6 @@ public class PlayerController : MonoBehaviour
     {
         if (jumpAction != null && jumpAction.triggered && isGrounded)
         {
-            // Use kinematic formula to compute required initial vertical velocity
             velocity.y = Mathf.Sqrt(2f * jumpHeight * Mathf.Abs(gravity));
             OnJump?.Invoke();
         }
@@ -107,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleCrouch()
     {
-        bool shouldCrouch = (crouchAction != null && crouchAction.IsPressed());
+        bool shouldCrouch = (crouchAction != null && crouchAction.IsPressed() ) || !canUncrouch();
         float transitionSpeed = crouchTransitionSpeed * Time.deltaTime;
         characterController.height = Mathf.Lerp(characterController.height, shouldCrouch ? crouchHeight : standingHeight, transitionSpeed);
 
@@ -120,6 +136,39 @@ public class PlayerController : MonoBehaviour
         {
             OnCrouch?.Invoke();
         }
+    }
+
+    private bool canUncrouch()
+    {
+        if (characterController.height >= standingHeight - 0.01f)
+            return true;
+
+        Vector3 worldCenter = transform.TransformPoint(characterController.center);
+
+        Vector3 start = worldCenter + Vector3.up * (characterController.height / 2f);
+        Vector3 end = worldCenter + Vector3.up * (standingHeight / 2f);
+
+        float radius = characterController.radius;
+        float clearanceMargin = 0.02f; 
+
+        int excluded = (1 << 2);
+        int layerMaskExcludingIgnoreRaycast = ~excluded;
+        bool blocked = Physics.CheckCapsule(start + Vector3.up * clearanceMargin,
+                                            end + Vector3.up * clearanceMargin,
+                                            radius,
+                                            layerMaskExcludingIgnoreRaycast,
+                                            QueryTriggerInteraction.Ignore);
+        return !blocked;
+    }
+
+    private void HandleSprint()
+    {
+        bool isSprinting = (sprintAction != null && sprintAction.IsPressed());
+        if (isSprinting && !wasSprinting)
+        {
+            OnSprint?.Invoke();
+        }
+        wasSprinting = isSprinting;
     }
 
     private void HandleRotation()
