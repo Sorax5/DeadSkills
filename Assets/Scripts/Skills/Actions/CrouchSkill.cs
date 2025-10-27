@@ -37,7 +37,7 @@ public class CrouchSkill : SkillAction
 
         if (Controller != null)
         {
-            Controller.CrouchSpeedModifier = shouldCrouch ? Controller.CrouchSpeedMultiplier : 1f;
+            Controller.SpeedModifiers.SetModifier(Identifier, shouldCrouch ? Controller.CrouchSpeedMultiplier : 1f);
         }
     }
 

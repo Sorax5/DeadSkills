@@ -11,9 +11,6 @@ public class SkillsActionController : MonoBehaviour
     [SerializeField] public float JumpHeight = 1.5f;
     [SerializeField] public float RotationSpeed = 0.1f;
 
-    [HideInInspector] public float CrouchSpeedModifier = 1f;
-    [HideInInspector] public float SprintSpeedModifier = 1f;
-
     [Header("Crouch")]
     [SerializeField] public float CrouchHeight = 1.0f;
     [SerializeField] public float StandingHeight = 2.0f;
@@ -35,6 +32,7 @@ public class SkillsActionController : MonoBehaviour
     public CharacterController CharacterController { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
 
+    public SpeedModifier SpeedModifiers = new SpeedModifier();
     public Vector3 velocity;
 
     private void Awake()
@@ -96,7 +94,7 @@ public class SkillsActionController : MonoBehaviour
         }
 
         velocity.y += Gravity * Time.deltaTime;
-        CharacterController.Move(velocity * CrouchSpeedModifier * SprintSpeedModifier * Time.deltaTime);
+        CharacterController.Move(velocity * SpeedModifiers.ApplyAllModifiers() * Time.deltaTime);
     }
 
     private void ProcessGround()

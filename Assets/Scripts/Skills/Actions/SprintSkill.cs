@@ -23,13 +23,14 @@ public class SprintSkill : SkillAction
     private void HandleSprint()
     {
         bool isSprinting = (sprintAction != null && sprintAction.IsPressed());
+
         if (isSprinting)
         {
-            Controller.SprintSpeedModifier = Controller.SprintSpeedMultiplier;
+            Controller.SpeedModifiers.SetModifier(Identifier, Controller.SprintSpeedMultiplier);
         }
         else
         {
-            Controller.SprintSpeedModifier = 1f;
+            Controller.SpeedModifiers.RemoveModifier(Identifier);
         }
     }
 }
