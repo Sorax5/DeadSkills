@@ -7,9 +7,13 @@ public class PlayerController : MonoBehaviour
     private const string MOVE_ACTION = "Move";
     private const string JUMP_ACTION = "Jump";
 
+    [Header("Movement")]
     [SerializeField] private float speed = 6.0f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 1.5f;
+
+    [Header("References")]
+    [SerializeField] private Transform cameraTransform;
 
     private CharacterController characterController;
     private PlayerInput playerInput;
@@ -29,6 +33,11 @@ public class PlayerController : MonoBehaviour
 
         moveAction = playerInput.actions.FindAction(MOVE_ACTION);
         jumpAction = playerInput.actions.FindAction(JUMP_ACTION);
+
+        if (cameraTransform == null)
+        {
+            cameraTransform = Camera.main.transform;
+        }
     }
 
     private void Update()
@@ -45,6 +54,13 @@ public class PlayerController : MonoBehaviour
         if (jumpAction.triggered && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        Vector3 forward = cameraTransform.forward;
+        forward.y = 0;
+        if (forward.sqrMagnitude > 0.01f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), 0.1f);
         }
 
         velocity.y += gravity * Time.deltaTime;
