@@ -126,8 +126,7 @@ GameObject:
   - component: {fileID: 7619021709617982576}
   - component: {fileID: 8448252776215433346}
   - component: {fileID: 6901099554743289239}
-  - component: {fileID: 6255423571665084217}
-  - component: {fileID: 3825614391746144218}
+  - component: {fileID: 8508352624932709574}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -229,7 +228,7 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6255423571665084217
+--- !u!114 &8508352624932709574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,32 +237,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7676550405470121069}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd5290e0b7b4eb84cb9a768a72d2cef0, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cb654fdf2fe4ec40bb8c47870a207b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  speed: 6
-  gravity: -9.81
-  jumpHeight: 1.5
-  rotationSpeed: 0.1
-  crouchHeight: 1
-  standingHeight: 2
-  crouchTransitionSpeed: 5
-  crouchSpeedMultiplier: 0.5
-  sprintSpeedMultiplier: 1.5
+  m_EditorClassIdentifier: Assembly-CSharp::SkillsActionController
+  Speed: 6
+  Gravity: -9.81
+  JumpHeight: 1.5
+  RotationSpeed: 0.1
+  CrouchSpeedModifier: 1
+  SprintSpeedModifier: 1
+  CrouchHeight: 1
+  StandingHeight: 2
+  CrouchStepHeight: 0.3
+  UncrouchStepHeight: 0.5
+  CrouchTransitionSpeed: 5
+  CrouchSpeedMultiplier: 0.5
+  SprintSpeedMultiplier: 1.5
   cameraTransform: {fileID: 0}
---- !u!114 &3825614391746144218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7676550405470121069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f53ce35ac8946bf4da4a5e83b5d5e743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
-  rendererObject: {fileID: 6825060303687808524}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &8996869592737593423
 GameObject:
   m_ObjectHideFlags: 0
