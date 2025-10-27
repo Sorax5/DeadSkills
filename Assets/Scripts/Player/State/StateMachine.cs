@@ -63,23 +63,27 @@ public class StateMachine
 
     private Transition GetTransition()
     {
+        // First pass: specific transitions from the current state
+        if (currentState != null)
+        {
+            foreach (var t in transitions)
+            {
+                if (!string.IsNullOrEmpty(t.FromName) && t.FromName == currentState.Name && t.Condition())
+                {
+                    return t;
+                }
+            }
+        }
+
+        // Second pass: global transitions (FromName null or empty)
         foreach (var t in transitions)
         {
-            bool fromMatches = false;
-            if (string.IsNullOrEmpty(t.FromName))
-            {
-                fromMatches = true; // global transition
-            }
-            else if (currentState != null && t.FromName == currentState.Name)
-            {
-                fromMatches = true;
-            }
-
-            if (fromMatches && t.Condition())
+            if (string.IsNullOrEmpty(t.FromName) && t.Condition())
             {
                 return t;
             }
         }
+
         return null;
     }
 

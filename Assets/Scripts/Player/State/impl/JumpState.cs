@@ -8,6 +8,9 @@ public class JumpState : InputState
     private readonly float moveSpeed;
     private float verticalVelocity;
 
+    private bool jumpButtonHeld = false;
+    private float jumpCutMultiplier = 0.5f;
+
     public JumpState(CharacterController controller, PlayerInput input, float jumpForce, float gravity, float moveSpeed) : base(controller, input)
     {
         this.jumpForce = jumpForce;
@@ -20,6 +23,7 @@ public class JumpState : InputState
     public override void Enter()
     {
         verticalVelocity = jumpForce;
+        jumpButtonHeld = Input.actions["Jump"].IsPressed();
     }
 
     public override void Exit()
@@ -32,6 +36,13 @@ public class JumpState : InputState
 
     public override void Update()
     {
+        bool currentlyHeld = Input.actions["Jump"].IsPressed();
+        if (!currentlyHeld && jumpButtonHeld && verticalVelocity > 0)
+        {
+            verticalVelocity *= jumpCutMultiplier;
+        }
+        jumpButtonHeld = currentlyHeld;
+
         Vector2 moveInput = Input.actions["Move"].ReadValue<Vector2>();
 
         Vector3 right = Controller.transform.right;
@@ -47,5 +58,13 @@ public class JumpState : InputState
         Vector3 vertical = Vector3.up * verticalVelocity * Time.deltaTime;
 
         Controller.Move(horizontal + vertical);
+    }
+
+    public void CutJump()
+    {
+        if (verticalVelocity > 0)
+        {
+            verticalVelocity *= jumpCutMultiplier;
+        }
     }
 }

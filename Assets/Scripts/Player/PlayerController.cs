@@ -27,11 +27,16 @@ public class PlayerController : MonoBehaviour
 
     public string CurrentState = "NONE";
 
-    // cached input actions
     private InputAction moveAction;
     private InputAction sprintAction;
     private InputAction jumpAction;
     private InputAction crouchAction;
+
+    public float CoyoteTime = 0.2f;
+    public float JumpBufferTime = 0.15f;
+
+    private float lastGroundedTime = -Mathf.Infinity;
+    private float lastJumpPressedTime = -Mathf.Infinity;
 
     private void Awake()
     {
@@ -72,7 +77,11 @@ public class PlayerController : MonoBehaviour
         stateMachine.AddTransition(idleState.Name, sprintState.Name, () => sprintAction.IsPressed() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && characterController.isGrounded);
 
         // Any -> Jump (when jump pressed and grounded) - Prevent if crouch is held
-        stateMachine.AddTransition(null, jumpState.Name, () => jumpAction.triggered && characterController.isGrounded && !crouchAction.IsPressed());
+        stateMachine.AddTransition(null, jumpState.Name, () =>
+            (Time.time - lastJumpPressedTime <= JumpBufferTime) &&
+            (characterController.isGrounded || Time.time - lastGroundedTime <= CoyoteTime) &&
+            !crouchAction.IsPressed());
+
         stateMachine.AddTransition(jumpState.Name, idleState.Name, () => characterController.isGrounded && moveAction.ReadValue<Vector2>().magnitude <= MoveThreshold);
         stateMachine.AddTransition(jumpState.Name, moveState.Name, () => characterController.isGrounded && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && !sprintAction.IsPressed());
         stateMachine.AddTransition(jumpState.Name, sprintState.Name, () => characterController.isGrounded && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && sprintAction.IsPressed());
@@ -87,6 +96,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (jumpAction != null && jumpAction.IsPressed())
+        {
+            lastJumpPressedTime = Time.time;
+        }
+
+        if (characterController.isGrounded)
+        {
+            lastGroundedTime = Time.time;
+        }
+
         stateMachine.Update();
         CurrentState = stateMachine.CurrentState != null ? stateMachine.CurrentState.Name : "NONE";
 
