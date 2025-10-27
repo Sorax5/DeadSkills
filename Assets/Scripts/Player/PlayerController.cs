@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public SprintState sprintState;
     public CrouchState crouchState;
     public JumpState jumpState;
+    public LongJumpState longJumpState;
 
     public float Speed = 5f;
     public float SprintSpeed = 8f;
@@ -27,13 +28,19 @@ public class PlayerController : MonoBehaviour
 
     public string CurrentState = "NONE";
 
+    // cached input actions
     private InputAction moveAction;
     private InputAction sprintAction;
     private InputAction jumpAction;
     private InputAction crouchAction;
 
-    public float CoyoteTime = 0.2f;
-    public float JumpBufferTime = 0.15f;
+    // long jump config
+    public float LongJumpForwardBoost = 10f;
+    public float LongJumpUpwardBoost = 8f;
+
+    // jump responsiveness
+    public float CoyoteTime = 0.2f; // allow jump shortly after leaving ground
+    public float JumpBufferTime = 0.15f; // allow jump pressed shortly before landing
 
     private float lastGroundedTime = -Mathf.Infinity;
     private float lastJumpPressedTime = -Mathf.Infinity;
@@ -54,6 +61,7 @@ public class PlayerController : MonoBehaviour
         sprintState = new SprintState(characterController, playerInput, SprintSpeed, Gravity);
         crouchState = new CrouchState(characterController, playerInput, CrouchHeight, characterController.height, Speed, Gravity);
         jumpState = new JumpState(characterController, playerInput, JumpForce, Gravity, Speed);
+        longJumpState = new LongJumpState(characterController, playerInput, LongJumpForwardBoost, LongJumpUpwardBoost, Gravity, Speed);
 
         // register states
         stateMachine.AddState(idleState);
@@ -61,6 +69,7 @@ public class PlayerController : MonoBehaviour
         stateMachine.AddState(sprintState);
         stateMachine.AddState(crouchState);
         stateMachine.AddState(jumpState);
+        stateMachine.AddState(longJumpState);
 
         // cache actions
         moveAction = playerInput.actions["Move"];
@@ -76,6 +85,32 @@ public class PlayerController : MonoBehaviour
         stateMachine.AddTransition(sprintState.Name, moveState.Name, () => !sprintAction.IsPressed() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && characterController.isGrounded);
         stateMachine.AddTransition(idleState.Name, sprintState.Name, () => sprintAction.IsPressed() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && characterController.isGrounded);
 
+        // Sprint -> Crouch (start slide) when crouch pressed while sprinting
+        stateMachine.AddTransition(sprintState.Name, crouchState.Name, () =>
+        {
+            if (crouchAction.triggered && characterController.isGrounded)
+            {
+                // request crouch state to begin sliding with sprint momentum
+                crouchState.BeginSlide(SprintSpeed * 1.2f);
+                return true;
+            }
+            return false;
+        });
+
+        // Jump -> Crouch (allow mid-air crouch to prepare slide on landing)
+        stateMachine.AddTransition(jumpState.Name, crouchState.Name, () =>
+        {
+            if (crouchAction.triggered)
+            {
+                float inputMag = Mathf.Max(moveAction.ReadValue<Vector2>().magnitude, 0.2f);
+                float baseSpeed = sprintAction.IsPressed() ? SprintSpeed : Speed;
+                float initialVel = baseSpeed * inputMag * 1.2f;
+                crouchState.BeginSlide(initialVel);
+                return true;
+            }
+            return false;
+        });
+
         // Any -> Jump (when jump pressed and grounded) - Prevent if crouch is held
         stateMachine.AddTransition(null, jumpState.Name, () =>
             (Time.time - lastJumpPressedTime <= JumpBufferTime) &&
@@ -88,19 +123,27 @@ public class PlayerController : MonoBehaviour
 
         // Any -> Crouch when crouch pressed - only if grounded and not jumping
         stateMachine.AddTransition(null, crouchState.Name, () => crouchAction.triggered && characterController.isGrounded && !jumpAction.IsPressed() && characterController.height != CrouchHeight);
-        stateMachine.AddTransition(crouchState.Name, moveState.Name, () => crouchState.CanStand() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && !crouchAction.IsPressed());
-        stateMachine.AddTransition(crouchState.Name, idleState.Name, () => crouchState.CanStand() && moveAction.ReadValue<Vector2>().magnitude <= MoveThreshold && !crouchAction.IsPressed());
+        stateMachine.AddTransition(crouchState.Name, moveState.Name, () => crouchState.CanStand() && !crouchState.IsSliding() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && !crouchAction.IsPressed());
+        stateMachine.AddTransition(crouchState.Name, idleState.Name, () => crouchState.CanStand() && !crouchState.IsSliding() && moveAction.ReadValue<Vector2>().magnitude <= MoveThreshold && !crouchAction.IsPressed());
+
+        // Crouch -> LongJump when sliding and jump pressed
+        stateMachine.AddTransition(crouchState.Name, longJumpState.Name, () => crouchState.IsSliding() && jumpAction.triggered);
+
+        // LongJump -> Move when grounded
+        stateMachine.AddTransition(longJumpState.Name, moveState.Name, () => characterController.isGrounded);
 
         stateMachine.SetState(idleState);
     }
 
     private void Update()
     {
+        // track jump press for buffer - update while holding so player can hold space to auto-jump on landing
         if (jumpAction != null && jumpAction.IsPressed())
         {
             lastJumpPressedTime = Time.time;
         }
 
+        // track grounded time for coyote
         if (characterController.isGrounded)
         {
             lastGroundedTime = Time.time;
