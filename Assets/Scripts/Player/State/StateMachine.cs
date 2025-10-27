@@ -41,8 +41,6 @@ public class StateMachine
             return;
         }
 
-        Debug.Log($"StateMachine: Transition {currentState?.Name ?? "null"} -> {state?.Name}");
-
         currentState?.Exit();
         currentState = state;
         currentState.Enter();
@@ -63,7 +61,6 @@ public class StateMachine
 
     private Transition GetTransition()
     {
-        // First pass: specific transitions from the current state
         if (currentState != null)
         {
             foreach (var t in transitions)
@@ -75,7 +72,6 @@ public class StateMachine
             }
         }
 
-        // Second pass: global transitions (FromName null or empty)
         foreach (var t in transitions)
         {
             if (string.IsNullOrEmpty(t.FromName) && t.Condition())

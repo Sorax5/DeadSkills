@@ -23,7 +23,6 @@ public class LightningSkill : SkillAction
         this.electricState = new ElectricState(Controller.CharacterController, Controller.PlayerInput, System.TimeSpan.FromSeconds(2), Controller.PlayerController.Gravity);
         stateMachine.AddState(electricState);
 
-        // use state names for transitions
         stateMachine.AddTransition(electricState.Name, "IDLE", () => electricState.IsDurationOver());
     }
 
