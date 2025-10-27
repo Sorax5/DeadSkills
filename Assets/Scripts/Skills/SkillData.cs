@@ -7,11 +7,11 @@ public class SkillData : ScriptableObject
     public Skills skill;
     public DeathData linkedDeath;
 
+    // TODO Add an image ? Image that will be used in the UIButton
     public string skillName;
     public string skillDescription;
     public SkillData[] parentSkills;
-
-    private bool isUnlocked;
+    public bool isUnlocked;
 
     public bool canBeUnlocked()
     {
@@ -23,7 +23,6 @@ public class SkillData : ScriptableObject
         foreach (SkillData skill in parentSkills)
             if (!skill.isUnlocked)
                 return false;
-      
 
         // Else the skill can be unlocked
         return true;
