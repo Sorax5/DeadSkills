@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SkillData", menuName = "Scriptable Objects/SkillData")]
+[CreateAssetMenu(menuName = "SkillData")]
 public class SkillData : ScriptableObject
 {
     public int skillID;
@@ -8,5 +8,6 @@ public class SkillData : ScriptableObject
     public string skillDescription;
 
     public SkillData[] parentSkills;
+    public GameEvent onSkillunlock;
 
 }
