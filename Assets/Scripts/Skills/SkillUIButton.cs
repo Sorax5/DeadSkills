@@ -20,14 +20,22 @@ public class SkillUIButton : MonoBehaviour
         // Fill the UI texts
         title.text = skillData.skillName;
         description.text = skillData.skillDescription;
-        unlockCondition.text = skillData.unlock.deathDescription;
+        unlockCondition.text = skillData.linkedDeath.deathDescription;
         skill = skillData.skill;
+
+        // TODO Change background color for the button based if the skill can be unlocked (no to be done in start though)
+
     }
 
     public void onSkillUnlock()
     {
-        Debug.Log("Skill débloqué");
-        unlockEvent.Raise(this, skill);
+
+        if (skillData.canBeUnlocked())
+        {
+            Debug.Log("Skill débloqué : " + skillData.skillName);
+            unlockEvent.Raise(this, skill);
+        }
+
     }
 
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FallDamageImmuniity
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skill: 0
-  unlock: {fileID: 11400000, guid: 3063c4c90311bcf44b7a14e4e0e41ab4, type: 2}
+  linkedDeath: {fileID: 11400000, guid: 3063c4c90311bcf44b7a14e4e0e41ab4, type: 2}
   skillName: "Immunit\xE9 aux d\xE9g\xE2ts de chute"
   skillDescription: "Le joueur est immunis\xE9 aux d\xE9g\xE2ts de chute"
   parentSkills: []
