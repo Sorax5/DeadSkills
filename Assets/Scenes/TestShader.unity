@@ -12381,6 +12381,14 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 46322045}
+    - target: {fileID: 6709887685256003807, guid: 85e7fa1c472b8b74db73f743cd784aba, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709887685256003807, guid: 85e7fa1c472b8b74db73f743cd784aba, type: 3}
+      propertyPath: 'm_Materials.Array.data[9]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 55064a77965146c48a0c5b4db25ae91d, type: 2}
     - target: {fileID: 7676550405470121069, guid: 85e7fa1c472b8b74db73f743cd784aba, type: 3}
       propertyPath: m_Name
       value: Player

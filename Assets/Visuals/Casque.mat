@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Casque
-  m_Shader: {fileID: 4800000, guid: 16cb05d5b742e434e9977e695c607878, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 6b68efc0d21d1c44e8ad5b20c27b8482, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -117,6 +117,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.7323261
@@ -129,10 +130,15 @@ Material:
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
+    - _threyshold1: 0.57
+    - _threyshold2: 0.96
+    - _threyshold3: 1
     m_Colors:
-    - _BaseColor: {r: 0.674993, g: 0.5392761, b: 0.17767385, a: 1}
+    - _BaseColor: {r: 1, g: 0.81444377, b: 0.1273585, a: 1}
     - _Color: {r: 0.674993, g: 0.5392761, b: 0.17767382, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _MaxLight: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _mapping: {r: 0.3, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
