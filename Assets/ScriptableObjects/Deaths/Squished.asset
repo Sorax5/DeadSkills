@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfcb3b5c8483b048b6ab9b76a728c36, type: 3}
+  m_Name: Squished
+  m_EditorClassIdentifier: Assembly-CSharp::DeathData
+  death: 6
+  deathName: "\xC9cras\xE9"
+  deathDescription: Pourtant vous aviez un casque de chantier ...
+  hasBeenAchieved: 0
