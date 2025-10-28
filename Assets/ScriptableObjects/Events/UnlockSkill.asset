@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84b7364557e60b48b581925b0c62909, type: 3}
   m_Name: UnlockSkill
   m_EditorClassIdentifier: Assembly-CSharp::GameEvent
-  listeners:
-  - {fileID: 0}
+  listeners: []

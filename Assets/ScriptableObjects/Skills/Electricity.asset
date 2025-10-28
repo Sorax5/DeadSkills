@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
+  m_Name: Electricity
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skill: 11
+  linkedDeath: {fileID: 11400000, guid: 3926e1b1532f9504f83bffcd41f65f56, type: 2}
+  skillName: Unlimited Power
+  skillDescription: "Les doigts dans la prise on est des mcs branch\xE9s"
+  parentSkills: []
+  isUnlocked: 0
