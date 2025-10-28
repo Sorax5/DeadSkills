@@ -9,8 +9,9 @@ public abstract class SkillAction
         this.Controller = controller;
     }
 
-    public abstract string Identifier { get; }
+    public abstract int Identifier { get; }
     public abstract bool IsActive { get; set; }
 
+    public abstract void Start();
     public abstract void Update();
 }
