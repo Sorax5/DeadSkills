@@ -83,7 +83,6 @@ public class Ui_manager : MonoBehaviour
             pauseMenu.SetActive(false);
             settingsMenu.SetActive(false);
             buttonCloseAll.SetActive(false);
-            Debug.Log("lalalalala");
             Time.timeScale = 1f;
         }
     }

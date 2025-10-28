@@ -8,8 +8,8 @@ public class DeathZone : MonoBehaviour
     public UnityEvent LocalPlayerDeath;
 
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private DeathData Deaths;
-    [SerializeField] private GameEvent deathEvent;
+    [SerializeField] private DeathData Deaths;  
+    [SerializeField] private GameEvent deathEvent; 
 
     private void OnTriggerEnter(Collider other)
     {

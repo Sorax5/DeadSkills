@@ -14,10 +14,13 @@ public class IdleState : InputState
 
     public override void Enter()
     {
+        Debug.Log("zjbdibdiz");
+        animator.SetBool("IsStatic", true);
     }
 
     public override void Exit()
     {
+        animator.SetBool("IsStatic", false);
     }
 
     public override void FixedUpdate()

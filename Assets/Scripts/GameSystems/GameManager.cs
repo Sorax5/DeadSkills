@@ -30,16 +30,22 @@ public class GameManager : MonoBehaviour
         var deathData = arg1 as DeathData;
         Debug.Log("GameManager detected player death: " + deathData.deathName);
 
+        if (!deathData.hasBeenAchieved)
+        {
+            skillPoints++;
+            deathData.hasBeenAchieved = true;
+        }
+
         if (playerInstance != null)
         {
             TeleportPlayer(playerSpawnPosition);
-            //ui_Manager.showOrHideSkillMenu();
+            ui_Manager.showOrHideSkillMenu();
         }
         else
         {
             Debug.LogWarning("Player instance is null during respawn.");
         }
-        skillPoints += 1;
+
     }
 
     private void FetchPlayerInScene()
@@ -87,15 +93,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Player instance is null during teleportation.");
-        }
-    }
-
-    // TODO Does the game manager listen to the even or those the player send the info with the ref to game manager ?
-    public void OnPlayerDeath(DeathData death)
-    {
-        if (!death.hasBeenAchieved){
-            skillPoints++;
-            death.hasBeenAchieved = true;
         }
     }
 
