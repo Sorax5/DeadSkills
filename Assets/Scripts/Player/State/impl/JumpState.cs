@@ -10,12 +10,19 @@ public class JumpState : InputState
 
     private bool jumpButtonHeld = false;
     private float jumpCutMultiplier = 0.5f;
+    
+    // Cache input actions to avoid repeated lookups
+    private InputAction jumpAction;
+    private InputAction moveAction;
 
     public JumpState(CharacterController controller, PlayerInput input, float jumpForce, float gravity, float moveSpeed) : base(controller, input)
     {
         this.jumpForce = jumpForce;
         this.gravity = gravity;
         this.moveSpeed = moveSpeed;
+        // Cache actions
+        this.jumpAction = input.actions["Jump"];
+        this.moveAction = input.actions["Move"];
     }
 
     public override string Name => "JUMP";
@@ -23,7 +30,7 @@ public class JumpState : InputState
     public override void Enter()
     {
         verticalVelocity = jumpForce;
-        jumpButtonHeld = Input.actions["Jump"].IsPressed();
+        jumpButtonHeld = jumpAction.IsPressed();
     }
 
     public override void Exit()
@@ -36,14 +43,14 @@ public class JumpState : InputState
 
     public override void Update()
     {
-        bool currentlyHeld = Input.actions["Jump"].IsPressed();
+        bool currentlyHeld = jumpAction.IsPressed();
         if (!currentlyHeld && jumpButtonHeld && verticalVelocity > 0)
         {
             verticalVelocity *= jumpCutMultiplier;
         }
         jumpButtonHeld = currentlyHeld;
 
-        Vector2 moveInput = Input.actions["Move"].ReadValue<Vector2>();
+        Vector2 moveInput = moveAction.ReadValue<Vector2>();
 
         Vector3 right = Controller.transform.right;
         Vector3 forward = Controller.transform.forward;

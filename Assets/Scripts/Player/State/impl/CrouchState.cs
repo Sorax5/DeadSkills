@@ -19,6 +19,9 @@ public class CrouchState : InputState
 
     // allow external request to begin slide at Enter()
     private float pendingSlideVelocity = 0f;
+    
+    // Cache input action to avoid repeated lookups
+    private InputAction moveAction;
 
     public CrouchState(CharacterController controller, PlayerInput playerInput, float crouchHeight, float standHeight, float speed, float gravity) : base(controller, playerInput)
     {
@@ -31,6 +34,8 @@ public class CrouchState : InputState
         sliding = false;
         currentSlideVelocity = 0f;
         pendingSlideVelocity = 0f;
+        // Cache action
+        this.moveAction = playerInput.actions["Move"];
     }
 
 
@@ -70,7 +75,7 @@ public class CrouchState : InputState
 
     public override void Update()
     {
-        Vector2 moveInput = Input.actions["Move"].ReadValue<Vector2>();
+        Vector2 moveInput = moveAction.ReadValue<Vector2>();
         
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 

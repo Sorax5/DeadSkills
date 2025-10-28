@@ -11,6 +11,9 @@ public class LongJumpState : InputState
     private Vector3 initialVelocity;
     private float duration = 0.6f;
     private float startTime;
+    
+    // Cache input action to avoid repeated lookups
+    private InputAction moveAction;
 
     public LongJumpState(CharacterController controller, PlayerInput input, float forwardBoost, float upwardBoost, float gravity, float moveSpeed) : base(controller, input)
     {
@@ -18,6 +21,8 @@ public class LongJumpState : InputState
         this.upwardBoost = upwardBoost;
         this.gravity = gravity;
         this.moveSpeed = moveSpeed;
+        // Cache action
+        this.moveAction = input.actions["Move"];
     }
 
     public override string Name => "LONGJUMP";
@@ -48,7 +53,7 @@ public class LongJumpState : InputState
         Vector3 vertical = Vector3.up * (initialVelocity.y + gravity * elapsed) * Time.deltaTime;
         Vector3 horizontal = new Vector3(initialVelocity.x, 0, initialVelocity.z) * Time.deltaTime;
 
-        Vector2 moveInput = Input.actions["Move"].ReadValue<Vector2>();
+        Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 right = Controller.transform.right;
         Vector3 forward = Controller.transform.forward;
         forward.y = 0f;
