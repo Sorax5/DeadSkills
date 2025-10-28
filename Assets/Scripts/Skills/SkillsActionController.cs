@@ -19,17 +19,18 @@ public class SkillsActionController : MonoBehaviour
     {
         CharacterController = GetComponent<CharacterController>();
         PlayerInput = GetComponent<PlayerInput>();
-
-        
     }
 
     private void Start()
     {
         RegisterAction(new LightningSkill(this, PlayerInput.actions["Attack"]));
+        RegisterAction(new CrouchSkill(this));
+        RegisterAction(new LongJumpSkill(this));
     }
 
     public void OnSkillUnlocked(int id)
     {
+        Debug.Log("Skill unlocked: " + id);
         SetActionActive(id, true);
     }
 

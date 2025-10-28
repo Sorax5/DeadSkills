@@ -87,7 +87,7 @@ public class StateMachine
         return null;
     }
 
-    private IState GetStateByName(string name)
+    public IState GetStateByName(string name)
     {
         foreach (var s in states)
         {

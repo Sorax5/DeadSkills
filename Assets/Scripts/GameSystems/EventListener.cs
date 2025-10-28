@@ -6,28 +6,39 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public class CustomGameEvent : UnityEvent<Component, object> { }
+
 public class EventListener : MonoBehaviour
 {
-    //L'event à écouter
+    // L'event à écouter
     public GameEvent gameEvent;
-    //La méthode a appele quand l'event a lieu
+    // La méthode à appeler quand l'event a lieu
     public CustomGameEvent response;
 
-    //Quand l'objet est créé, s'enregistre auprs de l'évnement
+    // Quand l'objet est activé, s'enregistre auprès de l'événement
     private void OnEnable()
     {
-        gameEvent.RegisterListener(this);
+        if (gameEvent != null)
+        {
+            gameEvent.RegisterListener(this);
+        }
+        else
+        {
+            Debug.LogWarning($"{nameof(EventListener)} sur {name} n'a pas de GameEvent assigné.", this);
+        }
     }
 
-    //Quand l'objet est détruit, se désenregistre auprs de l'évnement
+    // Quand l'objet est désactivé, se désenregistre auprès de l'événement
     private void OnDisable()
     {
-        gameEvent.UnregisterListener(this);
+        if (gameEvent != null)
+        {
+            gameEvent.UnregisterListener(this);
+        }
     }
 
-    //Quand l'event est levé, appelle la fonction choisie en attribut
+    // Quand l'event est levé, appelle la fonction choisie en attribut
     public void OnEventRaised(Component sender, object data)
     {
-        response.Invoke(sender, data);
+        response?.Invoke(sender, data);
     }
 }
