@@ -7,7 +7,6 @@ public class DeathZone : MonoBehaviour
 {
     public UnityEvent LocalPlayerDeath;
 
-    [SerializeField] private GameEvent onPlayerDeath;
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private DeathData Deaths;
 
@@ -15,10 +14,9 @@ public class DeathZone : MonoBehaviour
     {
         if (other.CompareTag(playerTag) && !Deaths.hasBeenAchieved)
         {
-            Deaths.hasBeenAchieved = true;
             Debug.Log("Player has died in DeathZone: " + Deaths.ToString());
-            onPlayerDeath.Raise(this, Deaths);
             LocalPlayerDeath?.Invoke();
+            GameManager.Instance.OnPlayerDeath(this, Deaths);
         }
     }
 }

@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float MoveThreshold = 0.1f;
 
     public string CurrentState = "NONE";
+    public bool IsEnabled = true;
 
     // cached input actions
     private InputAction moveAction;
@@ -137,6 +138,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!IsEnabled)
+        {
+            return;
+        }
         // track jump press for buffer - update while holding so player can hold space to auto-jump on landing
         if (jumpAction != null && jumpAction.IsPressed())
         {
@@ -165,6 +170,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!IsEnabled)
+        {
+            return;
+        }
         stateMachine.FixedUpdate();
     }
 }

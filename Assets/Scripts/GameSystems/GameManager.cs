@@ -23,14 +23,13 @@ public class GameManager : MonoBehaviour
         FetchPlayerInScene();
     }
 
-    public void OnPlayerDeath(Component arg0, object arg1)
+    public void OnPlayerDeath(Component arg0, DeathData deathData)
     {
-        var deathData = arg1 as DeathData;
         Debug.Log("GameManager detected player death: " + deathData.deathName);
 
         if (playerInstance != null)
         {
-            playerInstance.transform.position = playerSpawnPosition;
+            TeleportPlayer(playerSpawnPosition);
         }
         else
         {
@@ -56,5 +55,34 @@ public class GameManager : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(playerSpawnPosition, 0.5f);
+
+        if(playerInstance != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(playerSpawnPosition, playerInstance.transform.position);
+        }
+    }
+
+    public void TeleportPlayer(Vector3 newPosition)
+    {
+        if (playerInstance != null)
+        {
+            CharacterController characterController = playerInstance.GetComponent<CharacterController>();
+            if (characterController != null)
+            {
+                characterController.enabled = false;
+                playerInstance.transform.position = newPosition;
+                characterController.enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning("CharacterController component not found on player instance.");
+            }
+
+        }
+        else
+        {
+            Debug.LogWarning("Player instance is null during teleportation.");
+        }
     }
 }
