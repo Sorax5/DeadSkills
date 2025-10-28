@@ -566,9 +566,9 @@ MonoBehaviour:
   description: {fileID: 1506695655510675037}
   unlockCondition: {fileID: 932319807075729089}
   image: {fileID: 522871113155489905}
-  lockedColor: {r: 1, g: 0.042452812, b: 0.042452812, a: 0}
-  unlockedColor: {r: 0, g: 0.11046505, b: 1, a: 0}
-  unlockableColor: {r: 1, g: 1, b: 1, a: 0}
+  lockedColor: {r: 1, g: 0.042452812, b: 0.042452812, a: 1}
+  unlockedColor: {r: 0, g: 0.11046505, b: 1, a: 1}
+  unlockableColor: {r: 1, g: 1, b: 1, a: 1}
   unlockEvent: {fileID: 11400000, guid: 3acb5eba4d0be9d41b0588adbe38fb29, type: 2}
 --- !u!114 &-28227033321759204
 MonoBehaviour:

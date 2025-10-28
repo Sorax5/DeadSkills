@@ -25,8 +25,6 @@ public class SkillUIButton : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"[{name}] unlockedColor = {unlockedColor}, lockedColor = {lockedColor}, unlockableColor = {unlockableColor}");
-
 
         // Fill the UI texts
         title.text = skillData.skillName;
@@ -45,12 +43,19 @@ public class SkillUIButton : MonoBehaviour
     {
         // Blue if skill unlocked, red if not unlockable, white if unlockable
         if (skillData.isUnlocked) 
-            ChangeColor(Color.blue);
+            ChangeColor(unlockedColor);
         else if (!skillData.canBeUnlocked()) 
-            ChangeColor(Color.red);
+            ChangeColor(lockedColor);
         else 
-            ChangeColor(Color.white);
+            ChangeColor(unlockableColor);
         
+    }
+
+    private void Update() {
+
+        // TODO Not optimised to do that here but I can't arsed to debug and do a clean implementation with the remaining time
+        Debug.Log("Hey");
+        canBeUnlocked();
     }
 
     private void ChangeColor(Color color){ image.color = color; }
@@ -66,7 +71,7 @@ public class SkillUIButton : MonoBehaviour
                 GameManager.Instance.SkillPointDecrease();
                 skillData.isUnlocked = true;
                 unlockEvent.Raise(this, skill);
-                ChangeColor(Color.blue);
+                ChangeColor(unlockedColor);
             }
  
         }
