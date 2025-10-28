@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField] private Vector3 playerSpawnPosition = Vector3.zero;
+    [SerializeField] private GameObject respawnAnchor;
     [SerializeField] private string playerTag = "Player";
     public Ui_manager ui_Manager;
 
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
 
         FetchPlayerInScene();
+        TeleportPlayer(respawnAnchor.transform.position);
     }
 
     public void OnPlayerDeath(Component arg0, object arg1)
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
 
         if (playerInstance != null)
         {
-            TeleportPlayer(playerSpawnPosition);
+            TeleportPlayer(respawnAnchor.transform.position);
             ui_Manager.showOrHideSkillMenu();
         }
         else
@@ -51,26 +52,6 @@ public class GameManager : MonoBehaviour
     private void FetchPlayerInScene()
     {
         playerInstance = GameObject.FindGameObjectWithTag(playerTag);
-        if (playerInstance != null)
-        {
-            playerInstance.transform.position = playerSpawnPosition;
-        }
-        else
-        {
-            Debug.LogWarning("Player with tag '" + playerTag + "' not found in the scene.");
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(playerSpawnPosition, 0.5f);
-
-        if(playerInstance != null)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(playerSpawnPosition, playerInstance.transform.position);
-        }
     }
 
     public void TeleportPlayer(Vector3 newPosition)

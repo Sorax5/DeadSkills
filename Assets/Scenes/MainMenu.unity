@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e77e69c28342348aca607afaef0690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  gameScene: {fileID: 102900000, guid: 951c82295d21c1640ae132a498343bdc, type: 3}
+  gameScene: FinaleLD_Scene
   settings: {fileID: 1810167883}
 --- !u!4 &687396177
 Transform:
