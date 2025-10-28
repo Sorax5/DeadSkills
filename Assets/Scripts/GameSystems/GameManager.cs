@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Vector3 playerSpawnPosition = Vector3.zero;
     [SerializeField] private string playerTag = "Player";
+    public Ui_manager ui_Manager;
 
     // Skills
     public static string[] skillNames;
@@ -31,12 +32,13 @@ public class GameManager : MonoBehaviour
         if (playerInstance != null)
         {
             TeleportPlayer(playerSpawnPosition);
+            ui_Manager.showOrHideSkillMenu();
         }
         else
         {
             Debug.LogWarning("Player instance is null during respawn.");
         }
-        SkillPoints += 1;
+        skillPoints += 1;
     }
 
     private void FetchPlayerInScene()

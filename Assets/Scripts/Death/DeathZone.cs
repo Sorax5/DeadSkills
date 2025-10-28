@@ -12,7 +12,7 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag) && !Deaths.hasBeenAchieved)
+        if (other.CompareTag(playerTag))
         {
             Debug.Log("Player has died in DeathZone: " + Deaths.ToString());
             LocalPlayerDeath?.Invoke();

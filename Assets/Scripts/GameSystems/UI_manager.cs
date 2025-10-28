@@ -37,6 +37,14 @@ public class Ui_manager : MonoBehaviour
         }
     }
 
+    public void showOrHideSkillMenu()
+    {
+        if (!pauseMenu.activeInHierarchy)
+        {
+            activeOrDesactive(skillTreeMenu);
+        }
+    }
+
     public void showOrHidePauseMenu()
     {
         activeOrDesactive(pauseMenu);
