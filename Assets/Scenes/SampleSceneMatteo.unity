@@ -6761,7 +6761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!208 &1150355507
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -6827,7 +6827,6 @@ MonoBehaviour:
   playerTag: Player
   SkillPoints: 0
   playerInstance: {fileID: 0}
-  onPlayerDeathListener: {fileID: 1228260543}
 --- !u!4 &1228260542
 Transform:
   m_ObjectHideFlags: 0
@@ -6858,7 +6857,19 @@ MonoBehaviour:
   gameEvent: {fileID: 11400000, guid: 2cf55dfe3122e2b488fef00e25130745, type: 2}
   response:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1228260541}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnPlayerDeath
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!43 &1378994638
 Mesh:
   m_ObjectHideFlags: 0
@@ -13368,14 +13379,6 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
-      propertyPath: followDistance
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
-      propertyPath: updateInterval
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: SplineContainer
       value: 
       objectReference: {fileID: 27950876}
@@ -13469,7 +13472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2849583498818606938, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_Center.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4383588808921985604, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_Name
@@ -13481,7 +13484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7319417290341575642, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_BaseOffset
-      value: 1
+      value: 0.23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

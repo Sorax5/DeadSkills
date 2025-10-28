@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public int SkillPoints;
 
     public GameObject playerInstance;
-    public EventListener onPlayerDeathListener;
 
     private void Awake()
     {
@@ -22,14 +21,21 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
 
         FetchPlayerInScene();
-        onPlayerDeathListener.response.AddListener(OnPlayerDeath);
     }
 
-    private void OnPlayerDeath(Component arg0, object arg1)
+    public void OnPlayerDeath(Component arg0, object arg1)
     {
         var deathData = arg1 as DeathData;
         Debug.Log("GameManager detected player death: " + deathData.deathName);
-        playerInstance.transform.position = playerSpawnPosition;
+
+        if (playerInstance != null)
+        {
+            playerInstance.transform.position = playerSpawnPosition;
+        }
+        else
+        {
+            Debug.LogWarning("Player instance is null during respawn.");
+        }
         SkillPoints += 1;
     }
 
