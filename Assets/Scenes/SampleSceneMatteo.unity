@@ -245,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 27950875}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.69, y: 3.05, z: 32.92}
+  m_LocalPosition: {x: -0.69, y: 1, z: 32.92}
   m_LocalScale: {x: 16, y: 16, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13364,6 +13364,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: maxSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: followDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: updateInterval
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: SplineContainer
       value: 
       objectReference: {fileID: 27950876}
@@ -13465,7 +13477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7319417290341575642, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_Radius
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7319417290341575642, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_BaseOffset
