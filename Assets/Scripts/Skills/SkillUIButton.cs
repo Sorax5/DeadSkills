@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,6 @@ public class SkillUIButton : MonoBehaviour
     public Color unlockedColor;
     public Color unlockableColor;
 
-
     // Skill Data
     public GameEvent unlockEvent;
     private Skills skill;
@@ -32,14 +32,14 @@ public class SkillUIButton : MonoBehaviour
         unlockCondition.text = skillData.linkedDeath.deathDescription;
         skill = skillData.skill;
 
-        // TODO Add a childskill to skill data, populated by child at awake to their parent skill, then the parent can call canBeUnlocked on their child once they are unlocked
+
     }
 
     // On displaying the Skill Tree check which skill can be unlocked
-    private void OnEnable(){ canBeUnlocked(); }
+    private void OnEnable(){ UpdateUI(); }
 
     // Called when the Skill Tree is displayed or when an other skill is unlocked
-    public void canBeUnlocked()
+    public void UpdateUI()
     {
         // Blue if skill unlocked, red if not unlockable, white if unlockable
         if (skillData.isUnlocked) 
@@ -49,13 +49,6 @@ public class SkillUIButton : MonoBehaviour
         else 
             ChangeColor(unlockableColor);
         
-    }
-
-    private void Update() {
-
-        // TODO Not optimised to do that here but I can't arsed to debug and do a clean implementation with the remaining time
-        Debug.Log("Hey");
-        canBeUnlocked();
     }
 
     private void ChangeColor(Color color){ image.color = color; }
@@ -71,7 +64,10 @@ public class SkillUIButton : MonoBehaviour
                 GameManager.Instance.SkillPointDecrease();
                 skillData.isUnlocked = true;
                 unlockEvent.Raise(this, skill);
+
+                // Update the UI
                 ChangeColor(unlockedColor);
+                Debug.Log("Ougah Bougah");
             }
  
         }

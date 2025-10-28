@@ -18,4 +18,5 @@ MonoBehaviour:
   skillDescription: "J'ai gliss\xE9 chef"
   parentSkills:
   - {fileID: 11400000, guid: 5506313385af3aa42b39caf050f0d18f, type: 2}
+  - {fileID: 11400000, guid: c4fbb9ea14437be429967b2141721eff, type: 2}
   isUnlocked: 0

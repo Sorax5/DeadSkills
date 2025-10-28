@@ -21,7 +21,7 @@ public class Ui_manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.timeScale);
+        //Debug.Log(Time.timeScale);
     }
 
     void showOrHidePauseMenu(InputAction.CallbackContext context)
