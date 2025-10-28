@@ -12657,6 +12657,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
+      propertyPath: skillPoints
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
       propertyPath: playerInstance
       value: 
       objectReference: {fileID: 196395022}

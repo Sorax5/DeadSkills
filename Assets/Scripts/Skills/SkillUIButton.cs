@@ -60,14 +60,12 @@ public class SkillUIButton : MonoBehaviour
         if (skillData.canBeUnlocked() && !skillData.isUnlocked)
         {
             if (GameManager.Instance.GetSkillPoints() > 0){
-                Debug.Log("Skill débloqué : " + skillData.skillName);
                 GameManager.Instance.SkillPointDecrease();
                 skillData.isUnlocked = true;
                 unlockEvent.Raise(this, skill);
 
                 // Update the UI
                 ChangeColor(unlockedColor);
-                Debug.Log("Ougah Bougah");
             }
  
         }

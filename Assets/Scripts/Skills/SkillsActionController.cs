@@ -26,13 +26,13 @@ public class SkillsActionController : MonoBehaviour
         RegisterAction(new LightningSkill(this, PlayerInput.actions["Attack"]));
         RegisterAction(new CrouchSkill(this));
         RegisterAction(new LongJumpSkill(this));
+        RegisterAction(new SprintSkill(this));
     }
 
     public void OnSkillUnlocked(Component arg0, object arg1)
     {
         if (arg1 is Skills skill)
         {
-            Debug.Log("Skill unlocked: " + skill);
             SetActionActive(skill, true);
         }
     }
@@ -61,7 +61,7 @@ public class SkillsActionController : MonoBehaviour
     {
         foreach (var action in actions)
         {
-            if (action.Identifier == identifier)
+            if (action.Identifier.Equals(identifier))
             {
                 action.IsActive = active;
                 if (active)

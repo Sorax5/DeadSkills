@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
 
     public IdleState idleState;
     public MoveState moveState;
-    public SprintState sprintState;
     public JumpState jumpState;
 
     public float Speed = 5f;
@@ -61,14 +60,13 @@ public class PlayerController : MonoBehaviour
         // create states
         idleState = new IdleState(characterController, playerInput, Gravity);
         moveState = new MoveState(characterController, playerInput, Speed, Gravity);
-        sprintState = new SprintState(characterController, playerInput, SprintSpeed, Gravity);
+        
         jumpState = new JumpState(characterController, playerInput, JumpForce, Gravity, Speed);
         
 
         // register states
         stateMachine.AddState(idleState);
         stateMachine.AddState(moveState);
-        stateMachine.AddState(sprintState);
         stateMachine.AddState(jumpState);
 
         // cache actions
@@ -81,9 +79,7 @@ public class PlayerController : MonoBehaviour
         stateMachine.AddTransition(idleState.Name, moveState.Name, () => moveAction.ReadValue<Vector2>().magnitude > MoveThreshold);
         stateMachine.AddTransition(moveState.Name, idleState.Name, () => moveAction.ReadValue<Vector2>().magnitude <= MoveThreshold && characterController.isGrounded);
 
-        stateMachine.AddTransition(moveState.Name, sprintState.Name, () => sprintAction.IsPressed() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && characterController.isGrounded);
-        stateMachine.AddTransition(sprintState.Name, moveState.Name, () => !sprintAction.IsPressed() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && characterController.isGrounded);
-        stateMachine.AddTransition(idleState.Name, sprintState.Name, () => sprintAction.IsPressed() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && characterController.isGrounded);
+        
 
         // Any -> Jump (when jump pressed and grounded) - Prevent if crouch is held
         stateMachine.AddTransition(null, jumpState.Name, () =>
@@ -93,7 +89,6 @@ public class PlayerController : MonoBehaviour
 
         stateMachine.AddTransition(jumpState.Name, idleState.Name, () => characterController.isGrounded && moveAction.ReadValue<Vector2>().magnitude <= MoveThreshold);
         stateMachine.AddTransition(jumpState.Name, moveState.Name, () => characterController.isGrounded && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && !sprintAction.IsPressed());
-        stateMachine.AddTransition(jumpState.Name, sprintState.Name, () => characterController.isGrounded && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && sprintAction.IsPressed());
         
         stateMachine.SetState(idleState);
     }
