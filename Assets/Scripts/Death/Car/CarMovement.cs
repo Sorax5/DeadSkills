@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Splines;
@@ -9,23 +7,25 @@ public class CarMovement : MonoBehaviour
 {
     [Header("Spline Settings")]
     [SerializeField] private SplineContainer splineContainer;
-    [SerializeField, Range(0, 1)] private float splineProgress = 0f;
-    [SerializeField] private float progressSpeed = 0.05f;
+    [SerializeField] private float followDistance = 2f; // distance réelle à viser le long de la spline (mètres)
+    [SerializeField, Range(0.001f, 0.25f)] private float lookAhead = 0.02f; // demi-fenêtre locale autour de t courant (en t normalisé)
+    [SerializeField] private bool loop = true; // si false, on pince entre [0,1] et on ne wrap pas
 
     [Header("Movement Settings")]
-    [SerializeField] private float lookAhead = 0.02f;
     [SerializeField] private bool autoStart = true;
-    [SerializeField] private float navMeshSampleRadius = 3f;
+    [SerializeField] private float sampleRadius = 2f;
+    [SerializeField] private float updateInterval = 0.2f;
 
     private NavMeshAgent agent;
     private bool isMoving;
     private float splineLength;
+    private float splineProgress;
+    private float nextUpdateTime;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updatePosition = true;
+        agent.updateRotation = false; // On gère la rotation
     }
 
     private void Start()
@@ -39,48 +39,155 @@ public class CarMovement : MonoBehaviour
 
         splineLength = SplineUtility.CalculateLength(splineContainer.Spline, splineContainer.transform.localToWorldMatrix);
 
-        Vector3 startPos = splineContainer.transform.TransformPoint(splineContainer.Spline.EvaluatePosition(0f));
-        if (NavMesh.SamplePosition(startPos, out var hit, navMeshSampleRadius, NavMesh.AllAreas))
-        {
-            agent.Warp(hit.position);
-        }   
-        else
-        {
-            Debug.LogWarning($"{name}: impossible de placer l'agent sur le NavMesh au début de la spline.");
-        }
-            
-        if (autoStart) StartMovement();
+        // Initialiser la progression au point le plus proche pour ancrer le suivi local
+        splineProgress = FindClosestSplineTGlobal(transform.position);
+
+        if (autoStart)
+            StartMovement();
     }
 
     private void Update()
     {
-        if (!isMoving || splineContainer == null) return;
+        if (!isMoving || splineContainer == null)
+            return;
 
-        splineProgress += (agent.speed * Time.deltaTime) / splineLength;
-        if (splineProgress > 1f)
+        // Attendre un intervalle pour éviter de spammer SetDestination()
+        if (Time.time >= nextUpdateTime)
         {
-            splineProgress -= 1f;
+            nextUpdateTime = Time.time + updateInterval;
+            UpdateTargetOnSpline();
         }
 
-        Vector3 targetPos = splineContainer.transform.TransformPoint(
-            splineContainer.Spline.EvaluatePosition(splineProgress)
-        );
+        // Gestion manuelle de la rotation vers la direction du déplacement
+        if (agent.desiredVelocity.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(agent.desiredVelocity.normalized);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * agent.angularSpeed / 10f);
+        }
+    }
 
-        if (NavMesh.SamplePosition(targetPos, out var hit, 2f, NavMesh.AllAreas))
+    private void UpdateTargetOnSpline()
+    {
+        // 1) Rechercher le point le plus proche mais uniquement localement autour de la progression courante
+        Vector3 worldPos = transform.position;
+        float closestLocalT = FindClosestSplineTAround(worldPos, splineProgress, lookAhead);
+
+        // 2) Avancer le long de la spline d'une distance réelle (followDistance)
+        float targetT = AdvanceAlongSplineByDistance(closestLocalT, followDistance);
+
+        // 3) Gérer le bouclage ou le pincement
+        targetT = loop ? Mathf.Repeat(targetT, 1f) : Mathf.Clamp01(targetT);
+        splineProgress = targetT;
+
+        // 4) Évaluer la position cible sur la spline (monde)
+        Vector3 splineTarget = EvaluateWorldPosition(splineProgress);
+
+        // 5) Projeter la cible sur le NavMesh (sans warp)
+        if (NavMesh.SamplePosition(splineTarget, out var hit, sampleRadius, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
         }
+    }
 
-        Vector3 lookPos = splineContainer.Spline.EvaluatePosition(Mathf.Clamp01(splineProgress + lookAhead));
-        lookPos = splineContainer.transform.TransformPoint(lookPos);
-        Vector3 dir = (lookPos - transform.position);
-        dir.y = 0f;
+    // Recherche globale (utilisée au démarrage uniquement)
+    private float FindClosestSplineTGlobal(Vector3 worldPos)
+    {
+        var spline = splineContainer.Spline;
+        Transform t = splineContainer.transform;
 
-        if (dir.sqrMagnitude > 0.001f)
+        int samples = 64;
+        float bestT = 0f;
+        float bestDist = float.MaxValue;
+
+        for (int i = 0; i <= samples; i++)
         {
-            Quaternion targetRot = Quaternion.LookRotation(dir.normalized);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * agent.angularSpeed / 10f);
+            float tValue = (float)i / samples;
+            Vector3 p = t.TransformPoint(spline.EvaluatePosition(tValue));
+            float d = Vector3.SqrMagnitude(worldPos - p);
+            if (d < bestDist)
+            {
+                bestDist = d;
+                bestT = tValue;
+            }
         }
+
+        return bestT;
+    }
+
+    // Recherche locale autour d'un t donné, avec gestion du wrap
+    private float FindClosestSplineTAround(Vector3 worldPos, float aroundT, float halfWindow)
+    {
+        var spline = splineContainer.Spline;
+        Transform tr = splineContainer.transform;
+
+        int samples = 32;
+        float bestT = aroundT;
+        float bestDist = float.MaxValue;
+
+        for (int i = 0; i <= samples; i++)
+        {
+            float alpha = (float)i / samples; // [0..1]
+            float offset = Mathf.Lerp(-halfWindow, halfWindow, alpha);
+            float tValue = loop ? Mathf.Repeat(aroundT + offset, 1f)
+                                : Mathf.Clamp01(aroundT + offset);
+
+            Vector3 p = tr.TransformPoint(spline.EvaluatePosition(tValue));
+            float d = Vector3.SqrMagnitude(worldPos - p);
+            if (d < bestDist)
+            {
+                bestDist = d;
+                bestT = tValue;
+            }
+        }
+
+        return bestT;
+    }
+
+    // Avance le paramètre t d'une distance réelle (approximation adaptative en quelques itérations)
+    private float AdvanceAlongSplineByDistance(float startT, float distance)
+    {
+        if (distance <= 0f || splineLength <= 0f)
+            return startT;
+
+        float t = startT;
+        Vector3 prev = EvaluateWorldPosition(t);
+
+        // Estimation initiale du pas en t (grossière)
+        float stepT = Mathf.Clamp(distance / Mathf.Max(splineLength, 0.0001f), 0.0025f, 0.1f);
+
+        float moved = 0f;
+        int safety = 0;
+        const int maxIter = 16;
+
+        while (moved < distance && safety++ < maxIter)
+        {
+            float nextT = loop ? Mathf.Repeat(t + stepT, 1f) : Mathf.Clamp01(t + stepT);
+            Vector3 nextPos = EvaluateWorldPosition(nextT);
+
+            float seg = Vector3.Distance(prev, nextPos);
+            if (seg <= 1e-4f)
+                break;
+
+            moved += seg;
+            t = nextT;
+            prev = nextPos;
+
+            float remaining = distance - moved;
+            // Ajuster dynamiquement le pas en t selon la "vitesse" locale (mètre / t)
+            float metersPerT = seg / stepT;
+            stepT = Mathf.Clamp(remaining / Mathf.Max(metersPerT, 1e-4f), 0.001f, 0.1f);
+
+            if (!loop && Mathf.Approximately(t, 1f)) // si pas de boucle, on peut s'arrêter en bout
+                break;
+        }
+
+        return t;
+    }
+
+    private Vector3 EvaluateWorldPosition(float t)
+    {
+        var local = splineContainer.Spline.EvaluatePosition(t);
+        return splineContainer.transform.TransformPoint(local);
     }
 
     public void StartMovement() => isMoving = true;
@@ -90,9 +197,9 @@ public class CarMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (splineContainer == null) return;
+        var spline = splineContainer.Spline;
 
         Gizmos.color = Color.cyan;
-        var spline = splineContainer.Spline;
         int steps = 50;
         Vector3 prev = splineContainer.transform.TransformPoint(spline.EvaluatePosition(0f));
 
@@ -104,9 +211,12 @@ public class CarMovement : MonoBehaviour
             prev = pos;
         }
 
-        Gizmos.color = Color.red;
-        Vector3 current = splineContainer.transform.TransformPoint(splineContainer.Spline.EvaluatePosition(splineProgress));
-        Gizmos.DrawSphere(current, 0.15f);
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.red;
+            Vector3 current = splineContainer.transform.TransformPoint(spline.EvaluatePosition(splineProgress));
+            Gizmos.DrawSphere(current, 0.15f);
+        }
     }
 #endif
 }

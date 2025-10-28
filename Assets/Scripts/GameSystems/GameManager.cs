@@ -7,14 +7,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Vector3 playerSpawnPosition = Vector3.zero;
     [SerializeField] private string playerTag = "Player";
+    public Ui_manager ui_Manager;
 
     // Skills
     public static string[] skillNames;
     public static string[] skillDescription;
-    public int SkillPoints;
+    // TODO Will be private just accessible in editor for the moment to facilitate debug
+    public int skillPoints;
 
     public GameObject playerInstance;
-    public EventListener onPlayerDeathListener;
 
     private void Awake()
     {
@@ -22,15 +23,22 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
 
         FetchPlayerInScene();
-        onPlayerDeathListener.response.AddListener(OnPlayerDeath);
     }
 
-    private void OnPlayerDeath(Component arg0, object arg1)
+    public void OnPlayerDeath(Component arg0, DeathData deathData)
     {
-        var deathData = arg1 as DeathData;
         Debug.Log("GameManager detected player death: " + deathData.deathName);
-        playerInstance.transform.position = playerSpawnPosition;
-        SkillPoints += 1;
+
+        if (playerInstance != null)
+        {
+            TeleportPlayer(playerSpawnPosition);
+            ui_Manager.showOrHideSkillMenu();
+        }
+        else
+        {
+            Debug.LogWarning("Player instance is null during respawn.");
+        }
+        skillPoints += 1;
     }
 
     private void FetchPlayerInScene()
@@ -50,5 +58,48 @@ public class GameManager : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(playerSpawnPosition, 0.5f);
+
+        if(playerInstance != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(playerSpawnPosition, playerInstance.transform.position);
+        }
     }
+
+    public void TeleportPlayer(Vector3 newPosition)
+    {
+        if (playerInstance != null)
+        {
+            CharacterController characterController = playerInstance.GetComponent<CharacterController>();
+            if (characterController != null)
+            {
+                characterController.enabled = false;
+                playerInstance.transform.position = newPosition;
+                characterController.enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning("CharacterController component not found on player instance.");
+            }
+
+        }
+        else
+        {
+            Debug.LogWarning("Player instance is null during teleportation.");
+        }
+    }
+
+    // TODO Does the game manager listen to the even or those the player send the info with the ref to game manager ?
+    public void OnPlayerDeath(DeathData death)
+    {
+        if (!death.hasBeenAchieved){
+            skillPoints++;
+            death.hasBeenAchieved = true;
+        }
+    }
+
+    // Takes no arguments as all no skills cost 1
+    public void SkillPointDecrease() { skillPoints--; }
+    public int GetSkillPoints() { return skillPoints; }
+
 }

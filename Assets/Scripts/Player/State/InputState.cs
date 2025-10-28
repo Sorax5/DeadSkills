@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,9 @@ public abstract class InputState : IState
 
     private readonly CharacterController controller;
     private readonly PlayerInput input;
+
+    public Animator animator;
+
 
     public InputState(CharacterController controller, PlayerInput input)
     {

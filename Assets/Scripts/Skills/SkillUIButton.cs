@@ -33,6 +33,8 @@ public class SkillUIButton : MonoBehaviour
         description.text = skillData.skillDescription;
         unlockCondition.text = skillData.linkedDeath.deathDescription;
         skill = skillData.skill;
+
+        // TODO Add a childskill to skill data, populated by child at awake to their parent skill, then the parent can call canBeUnlocked on their child once they are unlocked
     }
 
     // On displaying the Skill Tree check which skill can be unlocked
@@ -59,10 +61,14 @@ public class SkillUIButton : MonoBehaviour
         // If the skill is unlockable and not yet unlocked
         if (skillData.canBeUnlocked() && !skillData.isUnlocked)
         {
-            Debug.Log("Skill débloqué : " + skillData.skillName);
-            skillData.isUnlocked = true;
-            unlockEvent.Raise(this, skill);
-            ChangeColor(unlockedColor);
+            if (GameManager.Instance.GetSkillPoints() > 0){
+                Debug.Log("Skill débloqué : " + skillData.skillName);
+                GameManager.Instance.SkillPointDecrease();
+                skillData.isUnlocked = true;
+                unlockEvent.Raise(this, skill);
+                ChangeColor(Color.blue);
+            }
+ 
         }
 
     }

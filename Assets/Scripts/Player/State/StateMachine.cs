@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class StateMachine
@@ -9,6 +10,8 @@ public class StateMachine
 
     private readonly List<IState> states = new List<IState>();
     private readonly List<Transition> transitions = new List<Transition>();
+
+    public Animator animator;
 
     public void Update()
     {
@@ -51,6 +54,7 @@ public class StateMachine
         if (!states.Contains(state))
         {
             states.Add(state);
+            if (state is InputState) ((InputState)state).animator = animator;
         }
     }
 
