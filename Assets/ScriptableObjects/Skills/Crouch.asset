@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
+  m_Name: Crouch
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skill: 7
+  linkedDeath: {fileID: 11400000, guid: 238f7c35be4b6314ba4d4d5b0d72665f, type: 2}
+  skillName: Accroupissement
+  skillDescription: J'ai mal aux genoux
+  parentSkills: []
+  isUnlocked: 0

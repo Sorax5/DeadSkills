@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 692591100233401522}
   m_Layer: 2
   m_Name: Renderer
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,6 +430,10 @@ MonoBehaviour:
   CrouchHeight: 1
   MoveThreshold: 0.1
   CurrentState: NONE
+  LongJumpForwardBoost: 10
+  LongJumpUpwardBoost: 8
+  CoyoteTime: 0.2
+  JumpBufferTime: 0.15
 --- !u!114 &404356890121844160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +517,7 @@ GameObject:
   - component: {fileID: 1459461446029637423}
   m_Layer: 2
   m_Name: Cube
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
