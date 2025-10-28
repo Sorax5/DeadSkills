@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 public class DeathZone : MonoBehaviour
 {
-    public event Action LocalPlayerDeath;
+    public UnityEvent LocalPlayerDeath;
 
     [SerializeField] private GameEvent onPlayerDeath;
     [SerializeField] private string playerTag = "Player";
