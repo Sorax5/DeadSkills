@@ -24,6 +24,7 @@ public class JumpState : InputState
     {
         verticalVelocity = jumpForce;
         jumpButtonHeld = Input.actions["Jump"].IsPressed();
+        animator.SetTrigger("Jump");
     }
 
     public override void Exit()

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public StateMachine stateMachine;
 
     public Animator animator;
+    public GameObject mesh;
 
     public IdleState idleState;
     public MoveState moveState;
@@ -122,8 +123,11 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), 0.1f);
             }
         }
+        /*Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+        mesh.transform.forward = (mesh.transform.position + new Vector3(moveInput.x,0,moveInput.y).normalized).normalized;
+*/
     }
-
+ 
     private void FixedUpdate()
     {
         if (!IsEnabled)

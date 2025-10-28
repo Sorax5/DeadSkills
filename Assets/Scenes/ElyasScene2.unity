@@ -8451,19 +8451,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.42293727
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.906159
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8471,7 +8471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 129.96
       objectReference: {fileID: 0}
     - target: {fileID: 2606956380192799100, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -9065,7 +9065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7553ad350bce3409b1c3e868215f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerSpawnPosition: {x: 0, y: 2, z: 0}
+  respawnAnchor: {fileID: 0}
   playerTag: Player
   ui_Manager: {fileID: 1743337420}
   skillPoints: 0
