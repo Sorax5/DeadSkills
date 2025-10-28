@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CrouchSkill : SkillAction
 {
-    private bool isActive = false;
+    private bool isActive = true;
     public CrouchSkill(SkillsActionController controller) : base(controller)
     {
     }

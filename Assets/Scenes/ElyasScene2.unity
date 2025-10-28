@@ -8511,7 +8511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8448252776215433346, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_Center.y
-      value: 0.94
+      value: 0.91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17284,6 +17284,7 @@ MonoBehaviour:
       m_Calls: []
   playerTag: Player
   Deaths: {fileID: 11400000, guid: aec18ca1daad4834fbdfd6739c36ee78, type: 2}
+  deathEvent: {fileID: 0}
 --- !u!65 &2010665485
 BoxCollider:
   m_ObjectHideFlags: 0
