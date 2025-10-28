@@ -15,4 +15,4 @@ MonoBehaviour:
   death: 1
   deathName: Chute
   deathDescription: "Vous avez test\xE9 les effets de la gravit\xE9"
-  hasBeenAchieved: 0
+  hasBeenAchieved: 1
