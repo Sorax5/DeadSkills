@@ -50,6 +50,8 @@ public class CrouchState : InputState
             currentSlideVelocity = pendingSlideVelocity;
         }
         pendingSlideVelocity = 0f;
+        
+        animator.SetTrigger("Crouch");
     }
 
     public override void Exit()
@@ -59,6 +61,7 @@ public class CrouchState : InputState
         sliding = false;
         currentSlideVelocity = 0f;
         pendingSlideVelocity = 0f;
+        animator.SetTrigger("Uncrouch");
     }
 
     public override void FixedUpdate()
@@ -68,6 +71,17 @@ public class CrouchState : InputState
     public override void Update()
     {
         Vector2 moveInput = Input.actions["Move"].ReadValue<Vector2>();
+        
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (moveInput.magnitude > 0.001 && !stateInfo.IsName("WalkCrouch"))
+        {
+            animator.SetTrigger("WalkCrouch");
+        }
+        else if(moveInput.magnitude < 0.001 && !stateInfo.IsName("IdleCrouch"))
+        {
+            animator.SetTrigger("IdleCrouch");
+        }
 
         Vector3 right = Controller.transform.right;
         Vector3 forward = Controller.transform.forward;

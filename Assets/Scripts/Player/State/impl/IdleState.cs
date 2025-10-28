@@ -14,6 +14,9 @@ public class IdleState : InputState
 
     public override void Enter()
     {
+        Debug.Log("zjbdibdiz");
+        animator.SetTrigger("Idle");
+
     }
 
     public override void Exit()
