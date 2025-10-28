@@ -25,7 +25,9 @@ public class SkillsActionController : MonoBehaviour
     [SerializeField] public float SprintSpeedMultiplier = 1.5f;
 
     [Header("References")]
-    [SerializeField] public Transform cameraTransform;
+    [SerializeField] public Transform CameraTransform;
+    [SerializeField] public ElectrifyController ElectrifyController;
+    [SerializeField] public PlayerEffect PlayerEffect;
 
     private List<SkillAction> actions = new List<SkillAction>();
 
@@ -35,6 +37,8 @@ public class SkillsActionController : MonoBehaviour
     public SpeedModifier SpeedModifiers = new SpeedModifier();
     public Vector3 velocity;
 
+    public bool IsSliding { get; set; } = false;
+
     private void Awake()
     {
         CharacterController = GetComponent<CharacterController>();
@@ -43,10 +47,11 @@ public class SkillsActionController : MonoBehaviour
         actions.Add(new CrouchSkill(this, PlayerInput.actions["Crouch"]));
         actions.Add(new JumpSkill(this, PlayerInput.actions["Jump"]));
         actions.Add(new SprintSkill(this, PlayerInput.actions["Sprint"]));
+        actions.Add(new LightningSkill(this, PlayerInput.actions["Attack"]));
 
-        if (cameraTransform == null && Camera.main != null)
+        if (CameraTransform == null && Camera.main != null)
         {
-            cameraTransform = Camera.main.transform;
+            CameraTransform = Camera.main.transform;
         }
     }
 
@@ -66,6 +71,18 @@ public class SkillsActionController : MonoBehaviour
         }
     }
 
+    // New helper to enable/disable actions by their identifier
+    public void SetActionActive(string identifier, bool active)
+    {
+        foreach (var action in actions)
+        {
+            if (action.Identifier == identifier)
+            {
+                action.IsActive = active;
+            }
+        }
+    }
+
     private void Update()
     {
         HandleRotation();
@@ -80,13 +97,13 @@ public class SkillsActionController : MonoBehaviour
 
     private void HandleRotation()
     {
-        if (cameraTransform == null)
+        if (CameraTransform == null)
         {
             return;
         }
 
         ProcessGround();
-        Vector3 forward = cameraTransform.forward;
+        Vector3 forward = CameraTransform.forward;
         forward.y = 0;
         if (forward.sqrMagnitude > 0.01f)
         {
