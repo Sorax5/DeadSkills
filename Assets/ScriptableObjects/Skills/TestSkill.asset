@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
   m_Name: TestSkill
   m_EditorClassIdentifier: Assembly-CSharp::SkillInfos
+  skillID: 0
   skillName: Test
   skillDescription: DOOZY DANCE
   parentSkills: []
+  onSkillunlock: {fileID: 0}
