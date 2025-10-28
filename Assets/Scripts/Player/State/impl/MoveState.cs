@@ -20,6 +20,8 @@ public class MoveState : InputState
     {
         Input.actions.FindAction("Move").performed += OnMove;
         Input.actions.FindAction("Move").canceled += OnMoveCanceled;
+        animator.Play("Walk");
+        Debug.Log("ahahahaha");
     }
 
     public override void Exit()

@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
 
     public StateMachine stateMachine;
+
+    public Animator animator;
 
     public IdleState idleState;
     public MoveState moveState;
@@ -52,6 +55,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         cameraTransform = Camera.main != null ? Camera.main.transform : null;
         this.stateMachine = new StateMachine();
+        this.stateMachine.animator = animator;
     }
 
     private void Start()
