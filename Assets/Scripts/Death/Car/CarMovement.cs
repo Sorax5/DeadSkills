@@ -20,6 +20,9 @@ public class CarMovement : MonoBehaviour
     public float rotationLerpSpeed = 10f;
     public float lookAheadDistance = 1f;
 
+    // control movement
+    public bool isMoving = true;
+
     private void Awake()
     {
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
@@ -138,29 +141,42 @@ public class CarMovement : MonoBehaviour
             if (navMeshAgent == null || samplePositions == null || splineLength <= 0f)
                 yield break;
 
-            distanceAlong += navMeshAgent.speed * Time.deltaTime;
-            currentDistanceAlong = distanceAlong;
-
-            Vector3 targetPos = EvaluatePositionAtDistance(distanceAlong);
-
-            Vector3 currentPos = navMeshAgent.transform.position;
-            Vector3 smoothedPos = Vector3.Lerp(currentPos, targetPos, 1f - Mathf.Exp(-positionLerpSpeed * Time.deltaTime));
-            Vector3 displacement = smoothedPos - currentPos;
-
-            navMeshAgent.Move(displacement);
-
-            Vector3 lookPos = EvaluatePositionAtDistance(distanceAlong + lookAheadDistance);
-            Vector3 desiredDir = lookPos - navMeshAgent.transform.position;
-            desiredDir.y = 0f;
-
-            if (desiredDir.sqrMagnitude > 0.0001f)
+            if (isMoving)
             {
-                Quaternion targetRot = Quaternion.LookRotation(desiredDir.normalized);
-                navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
+                distanceAlong += navMeshAgent.speed * Time.deltaTime;
+                currentDistanceAlong = distanceAlong;
+
+                Vector3 targetPos = EvaluatePositionAtDistance(distanceAlong);
+
+                Vector3 currentPos = navMeshAgent.transform.position;
+                Vector3 smoothedPos = Vector3.Lerp(currentPos, targetPos, 1f - Mathf.Exp(-positionLerpSpeed * Time.deltaTime));
+                Vector3 displacement = smoothedPos - currentPos;
+
+                navMeshAgent.Move(displacement);
+
+                Vector3 lookPos = EvaluatePositionAtDistance(distanceAlong + lookAheadDistance);
+                Vector3 desiredDir = lookPos - navMeshAgent.transform.position;
+                desiredDir.y = 0f;
+
+                if (desiredDir.sqrMagnitude > 0.0001f)
+                {
+                    Quaternion targetRot = Quaternion.LookRotation(desiredDir.normalized);
+                    navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
+                }
             }
 
             yield return null;
         }
+    }
+
+    public void StopMovement()
+    {
+        isMoving = false;
+    }
+
+    public void StartMovement()
+    {
+        isMoving = true;
     }
 
     private void OnDrawGizmos()
