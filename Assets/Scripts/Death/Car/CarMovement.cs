@@ -4,21 +4,18 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Splines;
 
-public class CarDeath : MonoBehaviour
+public class CarMovement : MonoBehaviour
 {
     [SerializeField] private SplineContainer SplineContainer;
     private NavMeshAgent navMeshAgent;
 
-    // sampling data
     private Vector3[] samplePositions;
     private float[] sampleDistances;
     private float splineLength;
     private const int SampleCount = 200;
 
-    // runtime tracking for gizmos
     private float currentDistanceAlong = 0f;
 
-    // smoothing
     public float positionLerpSpeed = 8f;
     public float rotationLerpSpeed = 10f;
     public float lookAheadDistance = 1f;
