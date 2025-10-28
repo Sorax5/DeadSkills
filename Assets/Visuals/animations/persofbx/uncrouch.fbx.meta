@@ -1,54 +1,9 @@
 fileFormatVersion: 2
-guid: 97e11a5a9d197d341bd43549a29dba98
+guid: 75359e23e849c8045b6c1f6920682905
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Bocal
-    second: {fileID: 2100000, guid: 6dd8efb38285195478b9e5b70a23fa6f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Casque
-    second: {fileID: 2100000, guid: 0fe65d95211854146849cc46d33a5c2a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Gant
-    second: {fileID: 2100000, guid: ac36a2b91de9cd44383804b2c0beb188, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Noir
-    second: {fileID: 2100000, guid: ba4fd7b7ad6b89545aafdf3e644b3d6d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TransiCasque
-    second: {fileID: 2100000, guid: d2cf5d797ab0a384fbb6ae1460c3dbea, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Vertoeil
-    second: {fileID: 2100000, guid: ded6c1dbf4dba2c4d9af0e03a8335121, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: noiroeil
-    second: {fileID: 2100000, guid: 03599de05643a4d458d680c52f692af7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: peau.001
-    second: {fileID: 2100000, guid: 09cc245b5c334dc4597a18987c7796eb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: yea
-    second: {fileID: 2100000, guid: bd60d6a0dce27424f92040a171760db7, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -67,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -141,11 +96,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 8452ea3d61b928845a75ed9836380720, type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 2
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

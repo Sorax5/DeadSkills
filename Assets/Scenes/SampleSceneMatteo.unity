@@ -6544,6 +6544,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: NeoPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 8084717424276471210, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 2117688941}
+    - target: {fileID: 8084717424276471210, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 46322045}
+    - target: {fileID: 8136975915509417087, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e1ee41854ebdb344685ecb71261b7bae, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12976,6 +12988,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2117688941 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8136975915509417087, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
+  m_PrefabInstance: {fileID: 1080321322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &259715103637383029
 PrefabInstance:
   m_ObjectHideFlags: 0
