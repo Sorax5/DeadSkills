@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void FetchPlayerInScene()
     {
+        // Cache player reference - FindGameObjectWithTag is expensive and should only be called once
         playerInstance = GameObject.FindGameObjectWithTag(playerTag);
         if (playerInstance != null)
         {
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        // Only execute drawing code in the editor
+        #if UNITY_EDITOR
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(playerSpawnPosition, 0.5f);
 
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(playerSpawnPosition, playerInstance.transform.position);
         }
+        #endif
     }
 
     public void TeleportPlayer(Vector3 newPosition)

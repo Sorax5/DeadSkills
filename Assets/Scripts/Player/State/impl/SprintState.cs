@@ -7,25 +7,28 @@ public class SprintState : InputState
     private readonly float gravity;
 
     private Vector2 moveInput = Vector2.zero;
+    private InputAction moveAction;
 
     public SprintState(CharacterController controller, PlayerInput input, float sprintSpeed, float gravity) : base(controller, input)
     {
         this.sprintSpeed = sprintSpeed;
         this.gravity = gravity;
+        // Cache the action to avoid repeated FindAction calls
+        this.moveAction = input.actions["Move"];
     }
 
     public override string Name => "SPRINT";
 
     public override void Enter()
     {
-        Input.actions.FindAction("Move").performed += OnMove;
-        Input.actions.FindAction("Move").canceled += OnMoveCanceled;
+        moveAction.performed += OnMove;
+        moveAction.canceled += OnMoveCanceled;
     }
 
     public override void Exit()
     {
-        Input.actions.FindAction("Move").performed -= OnMove;
-        Input.actions.FindAction("Move").canceled -= OnMoveCanceled;
+        moveAction.performed -= OnMove;
+        moveAction.canceled -= OnMoveCanceled;
         moveInput = Vector2.zero;
     }
 
@@ -36,7 +39,7 @@ public class SprintState : InputState
     public override void Update()
     {
         // read value each frame to ensure single-key detection
-        moveInput = Input.actions["Move"].ReadValue<Vector2>();
+        moveInput = moveAction.ReadValue<Vector2>();
 
         Vector3 right = Controller.transform.right;
         Vector3 forward = Controller.transform.forward;

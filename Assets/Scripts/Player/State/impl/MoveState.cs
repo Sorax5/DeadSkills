@@ -7,27 +7,30 @@ public class MoveState : InputState
     private float gravity;
 
     private Vector2 moveInput = Vector2.zero;
+    private InputAction moveAction;
 
     public MoveState(CharacterController controller, PlayerInput input, float speed, float gravity) : base(controller, input)
     {
         this.speed = speed;
         this.gravity = gravity;
+        // Cache the action to avoid repeated FindAction calls
+        this.moveAction = input.actions["Move"];
     }
 
     public override string Name => "MOVE";
 
     public override void Enter()
     {
-        Input.actions.FindAction("Move").performed += OnMove;
-        Input.actions.FindAction("Move").canceled += OnMoveCanceled;
+        moveAction.performed += OnMove;
+        moveAction.canceled += OnMoveCanceled;
         animator.SetBool("IsMoving", true);
     }
 
     public override void Exit()
     {
         animator.SetBool("IsMoving", false);
-        Input.actions.FindAction("Move").performed -= OnMove;
-        Input.actions.FindAction("Move").canceled -= OnMoveCanceled;
+        moveAction.performed -= OnMove;
+        moveAction.canceled -= OnMoveCanceled;
         moveInput = Vector2.zero;
     }
 
@@ -38,7 +41,7 @@ public class MoveState : InputState
     public override void Update()
     {
         // Read current value each frame to ensure single-key presses are always captured
-        moveInput = Input.actions["Move"].ReadValue<Vector2>();
+        moveInput = moveAction.ReadValue<Vector2>();
 
         // Convert input (x:right, y:forward) into world direction based on player rotation
         Vector3 right = Controller.transform.right;

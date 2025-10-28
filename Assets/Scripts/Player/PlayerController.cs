@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
-        cameraTransform = Camera.main != null ? Camera.main.transform : null;
+        // Cache Camera.main once - it's expensive to call repeatedly
+        Camera mainCamera = Camera.main;
+        cameraTransform = mainCamera != null ? mainCamera.transform : null;
         this.stateMachine = new StateMachine();
         this.stateMachine.animator = animator;
     }

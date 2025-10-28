@@ -7,11 +7,27 @@ public class ElectricityEffect : MonoBehaviour
     [SerializeField] private GameObject renderObject;
     [SerializeField] private ParticleSystem electricityParticles;
     private ElectrifiableObject electrifiableObject;
+    
+    // Cache renderer and material to avoid GetComponent and material instantiation on every effect play
+    private Renderer cachedRenderer;
+    private Material cachedMaterial;
+    private Color originalColor;
 
     private void Awake()
     {
         electrifiableObject = GetComponent<ElectrifiableObject>();
         electrifiableObject.OnObjectElectrified.AddListener(PlayEffect);
+        
+        // Cache renderer and material references
+        if (renderObject != null)
+        {
+            cachedRenderer = renderObject.GetComponent<Renderer>();
+            if (cachedRenderer != null)
+            {
+                cachedMaterial = cachedRenderer.material;
+                originalColor = cachedMaterial.color;
+            }
+        }
     }
 
     public void PlayEffect()
@@ -21,18 +37,16 @@ public class ElectricityEffect : MonoBehaviour
 
     private IEnumerator ElectricityCoroutine()
     {
-        Renderer renderer = renderObject.GetComponent<Renderer>();
         if (electricityParticles != null)
         {
             electricityParticles.Play();
         }
 
-        if (renderer != null)
+        if (cachedMaterial != null)
         {
-            Color originalColor = renderer.material.color;
-            renderer.material.color = Color.blue;
+            cachedMaterial.color = Color.blue;
             yield return new WaitForSeconds(0.8f);
-            renderer.material.color = Color.green;
+            cachedMaterial.color = Color.green;
         }
     }
 }

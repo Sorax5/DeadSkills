@@ -59,8 +59,10 @@ public class SkillsActionController : MonoBehaviour
 
     public void SetActionActive(Skills identifier, bool active)
     {
-        foreach (var action in actions)
+        // Use for loop instead of foreach to avoid garbage allocation
+        for (int i = 0; i < actions.Count; i++)
         {
+            var action = actions[i];
             if (action.Identifier.Equals(identifier))
             {
                 action.IsActive = active;
@@ -74,8 +76,10 @@ public class SkillsActionController : MonoBehaviour
 
     private void Update()
     {
-        foreach (var action in actions)
+        // Use for loop instead of foreach to avoid garbage allocation
+        for (int i = 0; i < actions.Count; i++)
         {
+            var action = actions[i];
             if (action.IsActive)
             {
                 action.Update();

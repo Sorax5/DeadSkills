@@ -4,14 +4,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent")]
 public class GameEvent : ScriptableObject
 {
-    // Liste des objets écoutant l'événement (non sérialisée pour éviter les refs persistantes entre Play/Stop)
+    // Liste des objets ï¿½coutant l'ï¿½vï¿½nement (non sï¿½rialisï¿½e pour ï¿½viter les refs persistantes entre Play/Stop)
     [System.NonSerialized]
     private readonly List<EventListener> listeners = new List<EventListener>();
 
-    // Fonction appelée par les objets souhaitant lever l'événement
+    // Fonction appelï¿½e par les objets souhaitant lever l'ï¿½vï¿½nement
     public void Raise(Component sender, object data)
     {
-        // Itérer à l'envers pour supporter (dés)inscriptions pendant la notification
+        // Itï¿½rer ï¿½ l'envers pour supporter (dï¿½s)inscriptions pendant la notification
+        // Using for loop instead of foreach to avoid garbage allocation
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
             var listener = listeners[i];
@@ -22,7 +23,7 @@ public class GameEvent : ScriptableObject
         }
     }
 
-    // Fonction permettant à un objet de s'enregistrer auprès de l'événement
+    // Fonction permettant ï¿½ un objet de s'enregistrer auprï¿½s de l'ï¿½vï¿½nement
     public void RegisterListener(EventListener listener)
     {
         if (listener == null) return;
@@ -32,7 +33,7 @@ public class GameEvent : ScriptableObject
         }
     }
 
-    // Fonction permettant à un objet de se désenregistrer de l'événement
+    // Fonction permettant ï¿½ un objet de se dï¿½senregistrer de l'ï¿½vï¿½nement
     public void UnregisterListener(EventListener listener)
     {
         if (listener == null) return;

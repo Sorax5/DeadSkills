@@ -9,6 +9,7 @@ public class StateMachine
     public IState CurrentState => currentState;
 
     private readonly List<IState> states = new List<IState>();
+    private readonly Dictionary<string, IState> statesByName = new Dictionary<string, IState>();
     private readonly List<Transition> transitions = new List<Transition>();
 
     public Animator animator;
@@ -54,6 +55,8 @@ public class StateMachine
         if (!states.Contains(state))
         {
             states.Add(state);
+            // Add to dictionary for O(1) lookup instead of O(n) search
+            statesByName[state.Name] = state;
             if (state is InputState) ((InputState)state).animator = animator;
         }
     }
@@ -67,8 +70,10 @@ public class StateMachine
     {
         if (currentState != null)
         {
-            foreach (var t in transitions)
+            // Use for loop instead of foreach to avoid garbage allocation
+            for (int i = 0; i < transitions.Count; i++)
             {
+                var t = transitions[i];
                 if (!string.IsNullOrEmpty(t.FromName) && t.FromName == currentState.Name && t.Condition())
                 {
                     return t;
@@ -76,8 +81,9 @@ public class StateMachine
             }
         }
 
-        foreach (var t in transitions)
+        for (int i = 0; i < transitions.Count; i++)
         {
+            var t = transitions[i];
             if (string.IsNullOrEmpty(t.FromName) && t.Condition())
             {
                 return t;
@@ -89,12 +95,10 @@ public class StateMachine
 
     public IState GetStateByName(string name)
     {
-        foreach (var s in states)
+        // Use Dictionary for O(1) lookup instead of O(n) linear search
+        if (statesByName.TryGetValue(name, out IState state))
         {
-            if (s.Name == name)
-            {
-                return s;
-            }
+            return state;
         }
         return null;
     }
