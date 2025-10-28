@@ -25,14 +25,15 @@ public class GameManager : MonoBehaviour
         FetchPlayerInScene();
     }
 
-    public void OnPlayerDeath(Component arg0, DeathData deathData)
+    public void OnPlayerDeath(Component arg0, object arg1)
     {
+        var deathData = arg1 as DeathData;
         Debug.Log("GameManager detected player death: " + deathData.deathName);
 
         if (playerInstance != null)
         {
             TeleportPlayer(playerSpawnPosition);
-            ui_Manager.showOrHideSkillMenu();
+            //ui_Manager.showOrHideSkillMenu();
         }
         else
         {

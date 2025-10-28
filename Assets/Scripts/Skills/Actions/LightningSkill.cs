@@ -1,10 +1,8 @@
-using System.Collections;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LightningSkill : SkillAction
 {
-    private bool isActive = true;
+    private bool isActive = false;
     private InputAction lightningAction;
     private ElectricState electricState;
 
