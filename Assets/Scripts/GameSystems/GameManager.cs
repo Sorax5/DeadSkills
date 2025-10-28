@@ -12,19 +12,10 @@ public class GameManager : MonoBehaviour
     public static string[] skillDescription;
     public int SkillPoints;
 
-
-
     private void Awake()
     {
         // Ensure only one instance exists
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
-
-    private void Start()
-    {
-        
-    }
-
-
 }

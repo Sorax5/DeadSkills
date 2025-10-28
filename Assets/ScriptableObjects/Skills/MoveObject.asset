@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
-  m_Name: SubTestSkill
-  m_EditorClassIdentifier: Assembly-CSharp::SkillInfos
-  SkillName: 
-  SkillDescription: 
-  parentSkills:
-  - {fileID: 11400000, guid: 87d8afc709737b44a9e64f524e793212, type: 2}
+  m_Name: MoveObject
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skill: 9
+  linkedDeath: {fileID: 11400000, guid: 46120664c62be554891ee157e10f09e2, type: 2}
+  skillName: Pousser
+  skillDescription: Damn les gens
+  parentSkills: []
+  isUnlocked: 0

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
+  m_Name: CrouchVertical
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skill: 8
+  linkedDeath: {fileID: 11400000, guid: ca1a9e26bf9d1df40a19129492d60d22, type: 2}
+  skillName: Zoom
+  skillDescription: C'est pour mieux te voir mon enfant
+  parentSkills:
+  - {fileID: 11400000, guid: 5506313385af3aa42b39caf050f0d18f, type: 2}
+  isUnlocked: 0

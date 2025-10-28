@@ -1,27 +1,70 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Skill : MonoBehaviour
+public class SkillUIButton : MonoBehaviour
 {
     public SkillData skillData;
 
     // UI Ref
+    // TODO La version clean voudrait qu'on les récupère depuis le code
     public TextMeshProUGUI title;
     public TextMeshProUGUI description;
+    public TextMeshProUGUI unlockCondition;
+    public Image image;
+
+    // Skill color
+    public Color lockedColor;
+    public Color unlockedColor;
+    public Color unlockableColor;
+
 
     // Skill Data
-    private GameEvent unlockEvent;
-    private int skillID;
+    public GameEvent unlockEvent;
+    private Skills skill;
 
     private void Start()
     {
+        Debug.Log($"[{name}] unlockedColor = {unlockedColor}, lockedColor = {lockedColor}, unlockableColor = {unlockableColor}");
+
+
+        // Fill the UI texts
         title.text = skillData.skillName;
         description.text = skillData.skillDescription;
+        unlockCondition.text = skillData.linkedDeath.deathDescription;
+        skill = skillData.skill;
     }
 
-    public void onSkillUnlock()
+    // On displaying the Skill Tree check which skill can be unlocked
+    private void OnEnable(){ canBeUnlocked(); }
+
+    // Called when the Skill Tree is displayed or when an other skill is unlocked
+    public void canBeUnlocked()
     {
-        unlockEvent.Raise(this, skillID);
+        // Blue if skill unlocked, red if not unlockable, white if unlockable
+        if (skillData.isUnlocked) 
+            ChangeColor(Color.blue);
+        else if (!skillData.canBeUnlocked()) 
+            ChangeColor(Color.red);
+        else 
+            ChangeColor(Color.white);
+        
+    }
+
+    private void ChangeColor(Color color){ image.color = color; }
+
+    public void onSkillClicked()
+    {
+        // TODO Add the check that there's an available skill point (stored in game event, game event listen to death event when one that hasNotBeenAchieved yet is sent get a point
+        // If the skill is unlockable and not yet unlocked
+        if (skillData.canBeUnlocked() && !skillData.isUnlocked)
+        {
+            Debug.Log("Skill débloqué : " + skillData.skillName);
+            skillData.isUnlocked = true;
+            unlockEvent.Raise(this, skill);
+            ChangeColor(unlockedColor);
+        }
+
     }
 
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
+  m_Name: LetThereBeLight
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skill: 1
+  linkedDeath: {fileID: 11400000, guid: ca1a9e26bf9d1df40a19129492d60d22, type: 2}
+  skillName: "Que la lumi\xE8re soit ..."
+  skillDescription: "... et la lumi\xE8re fut"
+  parentSkills:
+  - {fileID: 11400000, guid: d04d92f15bb1fc44e8c6cb1d77a0fe08, type: 2}
+  isUnlocked: 0
