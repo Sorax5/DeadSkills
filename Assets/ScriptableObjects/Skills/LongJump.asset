@@ -18,5 +18,5 @@ MonoBehaviour:
   skillDescription: On m'apelle Renault Lavillenie
   parentSkills:
   - {fileID: 11400000, guid: 5506313385af3aa42b39caf050f0d18f, type: 2}
-  - {fileID: 11400000, guid: 512ca9f609833494aafe10f6eb964e95, type: 2}
+  - {fileID: 11400000, guid: c4fbb9ea14437be429967b2141721eff, type: 2}
   isUnlocked: 0

@@ -566,9 +566,9 @@ MonoBehaviour:
   description: {fileID: 1506695655510675037}
   unlockCondition: {fileID: 932319807075729089}
   image: {fileID: 522871113155489905}
-  lockedColor: {r: 1, g: 0.042452812, b: 0.042452812, a: 0}
-  unlockedColor: {r: 0, g: 0.11046505, b: 1, a: 0}
-  unlockableColor: {r: 1, g: 1, b: 1, a: 0}
+  lockedColor: {r: 1, g: 0.042452812, b: 0.042452812, a: 1}
+  unlockedColor: {r: 0, g: 0.11046505, b: 1, a: 1}
+  unlockableColor: {r: 1, g: 1, b: 1, a: 1}
   unlockEvent: {fileID: 11400000, guid: 3acb5eba4d0be9d41b0588adbe38fb29, type: 2}
 --- !u!114 &-28227033321759204
 MonoBehaviour:
@@ -577,7 +577,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8002337599061610161}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c45df1fccd4d1124f9b672b7dd895e7d, type: 3}
   m_Name: 
@@ -588,7 +588,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6842721894075285500}
         m_TargetAssemblyTypeName: SkillUIButton, Assembly-CSharp
-        m_MethodName: canBeUnlocked
+        m_MethodName: UpdateUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
