@@ -13,6 +13,11 @@ public class SkillUIButton : MonoBehaviour
     public TextMeshProUGUI unlockCondition;
     public Image image;
 
+    // Skill color
+    public Color lockedColor;
+    public Color unlockedColor;
+    public Color unlockableColor;
+
 
     // Skill Data
     public GameEvent unlockEvent;
@@ -20,6 +25,9 @@ public class SkillUIButton : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log($"[{name}] unlockedColor = {unlockedColor}, lockedColor = {lockedColor}, unlockableColor = {unlockableColor}");
+
+
         // Fill the UI texts
         title.text = skillData.skillName;
         description.text = skillData.skillDescription;
@@ -28,36 +36,22 @@ public class SkillUIButton : MonoBehaviour
     }
 
     // On displaying the Skill Tree check which skill can be unlocked
-    private void OnEnable()
-    {
-        canBeUnlocked();
-    }
+    private void OnEnable(){ canBeUnlocked(); }
 
     // Called when the Skill Tree is displayed or when an other skill is unlocked
     public void canBeUnlocked()
     {
-        if (skillData.isUnlocked)
-            return;
-
-        // Really not optimised but I don't have the time + I'm tired
-        // TODO Could put the background to red instead 
-        if (!skillData.canBeUnlocked()){
-            Debug.Log("Je susi pas déblocable");
-            // Decrease the alpha of the skill because it's not unlockable (no skill are unlockable at the start)
-            Color color = image.color;
-            color.a = .5f;
-            image.color = color;
-        }
-        else {
-            Debug.Log("Je susi déblocable");
-
-            // Increase the alpha of the skill because it's not unlockable (no skill are unlockable at the start)
-            Color color = image.color;
-            color.a = 1f;
-            image.color = color;
-        }
-
+        // Blue if skill unlocked, red if not unlockable, white if unlockable
+        if (skillData.isUnlocked) 
+            ChangeColor(Color.blue);
+        else if (!skillData.canBeUnlocked()) 
+            ChangeColor(Color.red);
+        else 
+            ChangeColor(Color.white);
+        
     }
+
+    private void ChangeColor(Color color){ image.color = color; }
 
     public void onSkillClicked()
     {
@@ -68,8 +62,7 @@ public class SkillUIButton : MonoBehaviour
             Debug.Log("Skill débloqué : " + skillData.skillName);
             skillData.isUnlocked = true;
             unlockEvent.Raise(this, skill);
-
-            //TODO Change the color of the unlocked button
+            ChangeColor(unlockedColor);
         }
 
     }

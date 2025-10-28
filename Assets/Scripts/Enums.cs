@@ -38,5 +38,6 @@ public enum Deaths
     Harakiri,
     Hanged,
     Mauled,
-    RunOver
+    RunOver,
+    Compacted
 }
