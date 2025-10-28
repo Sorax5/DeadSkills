@@ -9,17 +9,15 @@ public class DeathZone : MonoBehaviour
 
     [SerializeField] private GameEvent onPlayerDeath;
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private string deathName = "";
-
-    private bool isAlreadyTriggered = false;
+    [SerializeField] private DeathData Deaths;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag) && !isAlreadyTriggered)
+        if (other.CompareTag(playerTag) && !Deaths.hasBeenAchieved)
         {
-            isAlreadyTriggered = true;
-            Debug.Log("Player has died in DeathZone: " + deathName);
-            onPlayerDeath.Raise(this, deathName);
+            Deaths.hasBeenAchieved = true;
+            Debug.Log("Player has died in DeathZone: " + Deaths.ToString());
+            onPlayerDeath.Raise(this, Deaths);
             LocalPlayerDeath?.Invoke();
         }
     }

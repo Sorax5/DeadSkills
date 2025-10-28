@@ -177,7 +177,7 @@ MonoBehaviour:
         m_CallState: 2
   onPlayerDeath: {fileID: 11400000, guid: 2cf55dfe3122e2b488fef00e25130745, type: 2}
   playerTag: Player
-  deathName: car
+  Deaths: {fileID: 11400000, guid: aec18ca1daad4834fbdfd6739c36ee78, type: 2}
 --- !u!1 &7277485233092266286
 GameObject:
   m_ObjectHideFlags: 0
