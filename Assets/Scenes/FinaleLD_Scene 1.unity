@@ -3846,14 +3846,6 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1857226739}
-    - target: {fileID: 8448252776215433346, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_Height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8448252776215433346, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_Center.y
-      value: 0.13
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
