@@ -1,8 +1,5 @@
-using Unity.IO.LowLevel.Unsafe;
+
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.UI;
 
 public class CrouchSkill : SkillAction
 {
@@ -59,7 +56,7 @@ public class CrouchSkill : SkillAction
 
         stateMachine.AddTransition(crouchState.Name, "MOVE", () => crouchState.CanStand() && !crouchState.IsSliding() && moveAction.ReadValue<Vector2>().magnitude > MoveThreshold && !crouchAction.IsPressed());
         stateMachine.AddTransition(crouchState.Name, "IDLE", () => crouchState.CanStand() && !crouchState.IsSliding() && moveAction.ReadValue<Vector2>().magnitude <= MoveThreshold && !crouchAction.IsPressed());
-        stateMachine.AddTransition(null, crouchState.Name, () => crouchAction.triggered && characterController.isGrounded && !jumpAction.IsPressed() && characterController.height != CrouchHeight);
+        stateMachine.AddTransition(null, crouchState.Name, () => crouchAction.IsPressed() && characterController.isGrounded && !jumpAction.IsPressed() && characterController.height != CrouchHeight);
 
         Debug.Log("CrouchSkill initialized");
     }

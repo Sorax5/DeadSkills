@@ -51,7 +51,7 @@ public class CrouchState : InputState
         }
         pendingSlideVelocity = 0f;
         
-        animator.SetTrigger("Crouch");
+        animator.SetBool("IsCrouch", true);
     }
 
     public override void Exit()
@@ -61,7 +61,7 @@ public class CrouchState : InputState
         sliding = false;
         currentSlideVelocity = 0f;
         pendingSlideVelocity = 0f;
-        animator.SetTrigger("Uncrouch");
+        animator.SetBool("IsCrouch", false);
     }
 
     public override void FixedUpdate()
