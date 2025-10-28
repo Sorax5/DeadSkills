@@ -9,7 +9,7 @@ public class LongJumpSkill : SkillAction
     {
     }
 
-    public override int Identifier => 2;
+    public override Skills Identifier => Skills.LongJump;
 
     public override bool IsActive { get => isActive; set => isActive = value; }
 

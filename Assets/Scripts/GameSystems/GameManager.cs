@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         if (playerInstance != null)
         {
             TeleportPlayer(playerSpawnPosition);
-            //ui_Manager.showOrHideSkillMenu();
+            ui_Manager.showOrHideSkillMenu();
         }
         else
         {

@@ -187,8 +187,8 @@ GameObject:
   - component: {fileID: 8084717424276471210}
   - component: {fileID: 404356890121844160}
   - component: {fileID: 2711909022384284559}
-  - component: {fileID: 9003344205016767228}
-  - component: {fileID: 4643449435629144664}
+  - component: {fileID: 1479616357590982232}
+  - component: {fileID: 9003382796932675263}
   m_Layer: 2
   m_Name: NeoPlayer
   m_TagString: Player
@@ -324,7 +324,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEffect
   electricityEffect: {fileID: 5531920917455439205}
---- !u!114 &9003344205016767228
+--- !u!114 &1479616357590982232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7676550405470121069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb654fdf2fe4ec40bb8c47870a207b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillsActionController
+  ElectrifyController: {fileID: 404356890121844160}
+  PlayerEffect: {fileID: 2711909022384284559}
+  PlayerController: {fileID: 8084717424276471210}
+--- !u!114 &9003382796932675263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,10 +355,10 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4643449435629144664}
+      - m_Target: {fileID: 1479616357590982232}
         m_TargetAssemblyTypeName: SkillsActionController, Assembly-CSharp
         m_MethodName: OnSkillUnlocked
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -352,21 +367,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4643449435629144664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7676550405470121069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cb654fdf2fe4ec40bb8c47870a207b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkillsActionController
-  ElectrifyController: {fileID: 404356890121844160}
-  PlayerEffect: {fileID: 2711909022384284559}
-  PlayerController: {fileID: 8084717424276471210}
 --- !u!1001 &749384453096205764
 PrefabInstance:
   m_ObjectHideFlags: 0

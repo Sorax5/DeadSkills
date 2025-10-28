@@ -11,7 +11,7 @@ public class CrouchSkill : SkillAction
     {
     }
 
-    public override int Identifier => 1;
+    public override Skills Identifier => Skills.Crouch;
 
     public override bool IsActive { get => isActive; set => isActive = value; }
 

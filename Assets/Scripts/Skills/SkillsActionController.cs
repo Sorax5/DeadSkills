@@ -28,10 +28,13 @@ public class SkillsActionController : MonoBehaviour
         RegisterAction(new LongJumpSkill(this));
     }
 
-    public void OnSkillUnlocked(int id)
+    public void OnSkillUnlocked(Component arg0, object arg1)
     {
-        Debug.Log("Skill unlocked: " + id);
-        SetActionActive(id, true);
+        if (arg1 is Skills skill)
+        {
+            Debug.Log("Skill unlocked: " + skill);
+            SetActionActive(skill, true);
+        }
     }
 
     public void RegisterAction(SkillAction action)
@@ -54,7 +57,7 @@ public class SkillsActionController : MonoBehaviour
         }
     }
 
-    public void SetActionActive(int identifier, bool active)
+    public void SetActionActive(Skills identifier, bool active)
     {
         foreach (var action in actions)
         {
