@@ -6745,6 +6745,54 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
+--- !u!1 &1150355506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150355508}
+  - component: {fileID: 1150355507}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!208 &1150355507
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150355506}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.05, y: 1, z: 1.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!4 &1150355508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150355506}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.69146, y: 0.7422, z: 40.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1228260540
 GameObject:
   m_ObjectHideFlags: 0
@@ -13319,6 +13367,14 @@ PrefabInstance:
       propertyPath: SplineContainer
       value: 
       objectReference: {fileID: 27950876}
+    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: splineContainer
+      value: 
+      objectReference: {fileID: 27950876}
+    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: lookAheadDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1543413860612310090, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -13408,6 +13464,10 @@ PrefabInstance:
       value: Car
       objectReference: {fileID: 0}
     - target: {fileID: 7319417290341575642, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7319417290341575642, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_BaseOffset
       value: 1
       objectReference: {fileID: 0}
@@ -13439,3 +13499,4 @@ SceneRoots:
   - {fileID: 5860770197962640905}
   - {fileID: 27950877}
   - {fileID: 1228260542}
+  - {fileID: 1150355508}

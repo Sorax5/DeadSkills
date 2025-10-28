@@ -4,214 +4,109 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Splines;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class CarMovement : MonoBehaviour
 {
-    [SerializeField] private SplineContainer SplineContainer;
-    private NavMeshAgent navMeshAgent;
+    [Header("Spline Settings")]
+    [SerializeField] private SplineContainer splineContainer;
+    [SerializeField, Range(0, 1)] private float splineProgress = 0f;
+    [SerializeField] private float progressSpeed = 0.05f;
 
-    private Vector3[] samplePositions;
-    private float[] sampleDistances;
+    [Header("Movement Settings")]
+    [SerializeField] private float lookAhead = 0.02f;
+    [SerializeField] private bool autoStart = true;
+    [SerializeField] private float navMeshSampleRadius = 3f;
+
+    private NavMeshAgent agent;
+    private bool isMoving;
     private float splineLength;
-    private const int SampleCount = 200;
-
-    private float currentDistanceAlong = 0f;
-
-    public float positionLerpSpeed = 8f;
-    public float rotationLerpSpeed = 10f;
-    public float lookAheadDistance = 1f;
-
-    // control movement
-    public bool isMoving = true;
 
     private void Awake()
     {
-        navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updatePosition = true;
     }
 
     private void Start()
     {
-        FollowSpline();
-    }
-
-    public void FollowSpline()
-    {
-        if (SplineContainer == null || navMeshAgent == null)
+        if (splineContainer == null)
         {
-            Debug.LogWarning("SplineContainer or NavMeshAgent is not assigned.");
+            Debug.LogWarning($"{name}: Aucun SplineContainer assigné.");
+            enabled = false;
             return;
         }
 
-        Spline spline = SplineContainer.Spline;
-        BuildSamples(spline, SampleCount);
-        StartCoroutine(FollowSplineCoroutine());
+        splineLength = SplineUtility.CalculateLength(splineContainer.Spline, splineContainer.transform.localToWorldMatrix);
+
+        Vector3 startPos = splineContainer.transform.TransformPoint(splineContainer.Spline.EvaluatePosition(0f));
+        if (NavMesh.SamplePosition(startPos, out var hit, navMeshSampleRadius, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+        }   
+        else
+        {
+            Debug.LogWarning($"{name}: impossible de placer l'agent sur le NavMesh au début de la spline.");
+        }
+            
+        if (autoStart) StartMovement();
     }
 
-    private void BuildSamples(Spline spline, int samples)
+    private void Update()
     {
-        samplePositions = new Vector3[samples];
-        sampleDistances = new float[samples];
+        if (!isMoving || splineContainer == null) return;
 
-        Transform containerT = SplineContainer != null ? SplineContainer.transform : null;
-
-        Vector3 prevLocal = spline.EvaluatePosition(0f);
-        Vector3 prevWorld = containerT != null ? containerT.TransformPoint(prevLocal) : prevLocal;
-        samplePositions[0] = prevWorld;
-        sampleDistances[0] = 0f;
-        float acc = 0f;
-
-        for (int i = 1; i < samples; i++)
+        splineProgress += (agent.speed * Time.deltaTime) / splineLength;
+        if (splineProgress > 1f)
         {
-            float t = (float)i / (samples - 1);
-            Vector3 posLocal = spline.EvaluatePosition(t);
-            Vector3 posWorld = containerT != null ? containerT.TransformPoint(posLocal) : posLocal;
-            acc += Vector3.Distance(prevWorld, posWorld);
-            samplePositions[i] = posWorld;
-            sampleDistances[i] = acc;
-            prevWorld = posWorld;
+            splineProgress -= 1f;
         }
 
-        splineLength = acc;
-    }
+        Vector3 targetPos = splineContainer.transform.TransformPoint(
+            splineContainer.Spline.EvaluatePosition(splineProgress)
+        );
 
-    private Vector3 EvaluatePositionAtDistance(float distance)
-    {
-        if (samplePositions == null || samplePositions.Length == 0)
-            return transform.position;
-
-        if (splineLength <= 0f)
-            return samplePositions[0];
-
-        distance = Mathf.Repeat(distance, splineLength);
-
-        int idx = 0;
-        while (idx < sampleDistances.Length - 1 && sampleDistances[idx + 1] < distance)
-            idx++;
-
-        int next = Mathf.Min(idx + 1, sampleDistances.Length - 1);
-        float segStart = sampleDistances[idx];
-        float segEnd = sampleDistances[next];
-        if (segEnd - segStart <= Mathf.Epsilon)
-            return samplePositions[idx];
-
-        float t = (distance - segStart) / (segEnd - segStart);
-        return Vector3.Lerp(samplePositions[idx], samplePositions[next], t);
-    }
-
-    private float FindClosestDistanceOnSpline(Vector3 worldPos)
-    {
-        if (samplePositions == null || samplePositions.Length == 0)
-            return 0f;
-
-        float bestDist = float.MaxValue;
-        int bestIdx = 0;
-        for (int i = 0; i < samplePositions.Length; i++)
+        if (NavMesh.SamplePosition(targetPos, out var hit, 2f, NavMesh.AllAreas))
         {
-            float d = Vector3.SqrMagnitude(worldPos - samplePositions[i]);
-            if (d < bestDist)
-            {
-                bestDist = d;
-                bestIdx = i;
-            }
+            agent.SetDestination(hit.position);
         }
 
-        return sampleDistances[bestIdx];
-    }
+        Vector3 lookPos = splineContainer.Spline.EvaluatePosition(Mathf.Clamp01(splineProgress + lookAhead));
+        lookPos = splineContainer.transform.TransformPoint(lookPos);
+        Vector3 dir = (lookPos - transform.position);
+        dir.y = 0f;
 
-    private IEnumerator FollowSplineCoroutine()
-    {
-        float distanceAlong = FindClosestDistanceOnSpline(navMeshAgent.transform.position);
-        currentDistanceAlong = distanceAlong;
-
-        if (!navMeshAgent.isOnNavMesh)
+        if (dir.sqrMagnitude > 0.001f)
         {
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(navMeshAgent.transform.position, out hit, 2f, NavMesh.AllAreas))
-            {
-                navMeshAgent.Warp(hit.position);
-            }
-            else
-            {
-                Debug.LogWarning("Agent is not on NavMesh and no nearby NavMesh found. Stopping spline follow.");
-                yield break;
-            }
-        }
-
-        while (true)
-        {
-            if (navMeshAgent == null || samplePositions == null || splineLength <= 0f)
-                yield break;
-
-            if (isMoving)
-            {
-                distanceAlong += navMeshAgent.speed * Time.deltaTime;
-                currentDistanceAlong = distanceAlong;
-
-                Vector3 targetPos = EvaluatePositionAtDistance(distanceAlong);
-
-                Vector3 currentPos = navMeshAgent.transform.position;
-                Vector3 smoothedPos = Vector3.Lerp(currentPos, targetPos, 1f - Mathf.Exp(-positionLerpSpeed * Time.deltaTime));
-                Vector3 displacement = smoothedPos - currentPos;
-
-                navMeshAgent.Move(displacement);
-
-                Vector3 lookPos = EvaluatePositionAtDistance(distanceAlong + lookAheadDistance);
-                Vector3 desiredDir = lookPos - navMeshAgent.transform.position;
-                desiredDir.y = 0f;
-
-                if (desiredDir.sqrMagnitude > 0.0001f)
-                {
-                    Quaternion targetRot = Quaternion.LookRotation(desiredDir.normalized);
-                    navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRot, rotationLerpSpeed * Time.deltaTime);
-                }
-            }
-
-            yield return null;
+            Quaternion targetRot = Quaternion.LookRotation(dir.normalized);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * agent.angularSpeed / 10f);
         }
     }
 
-    public void StopMovement()
-    {
-        isMoving = false;
-    }
+    public void StartMovement() => isMoving = true;
+    public void StopMovement() => isMoving = false;
 
-    public void StartMovement()
-    {
-        isMoving = true;
-    }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (samplePositions != null && samplePositions.Length > 1)
-        {
-            Gizmos.color = Color.cyan;
-            for (int i = 0; i < samplePositions.Length - 1; i++)
-            {
-                Gizmos.DrawLine(samplePositions[i], samplePositions[i + 1]);
-            }
+        if (splineContainer == null) return;
 
-            Gizmos.color = Color.yellow;
-            int step = Mathf.Max(1, samplePositions.Length / 30);
-            for (int i = 0; i < samplePositions.Length; i += step)
-            {
-                Gizmos.DrawSphere(samplePositions[i], 0.1f);
-            }
+        Gizmos.color = Color.cyan;
+        var spline = splineContainer.Spline;
+        int steps = 50;
+        Vector3 prev = splineContainer.transform.TransformPoint(spline.EvaluatePosition(0f));
+
+        for (int i = 1; i <= steps; i++)
+        {
+            float t = (float)i / steps;
+            Vector3 pos = splineContainer.transform.TransformPoint(spline.EvaluatePosition(t));
+            Gizmos.DrawLine(prev, pos);
+            prev = pos;
         }
 
-        if (Application.isPlaying && samplePositions != null && samplePositions.Length > 0)
-        {
-            Vector3 tgt = EvaluatePositionAtDistance(currentDistanceAlong);
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(tgt, 0.2f);
-
-            if (navMeshAgent != null)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(navMeshAgent.transform.position, tgt);
-
-                Vector3 lookPos = EvaluatePositionAtDistance(currentDistanceAlong + lookAheadDistance);
-                Gizmos.color = Color.magenta;
-                Gizmos.DrawLine(tgt, lookPos);
-            }
-        }
+        Gizmos.color = Color.red;
+        Vector3 current = splineContainer.transform.TransformPoint(splineContainer.Spline.EvaluatePosition(splineProgress));
+        Gizmos.DrawSphere(current, 0.15f);
     }
+#endif
 }
