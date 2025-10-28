@@ -72,6 +72,7 @@ MonoBehaviour:
       m_Calls: []
   playerTag: Player
   Deaths: {fileID: 11400000, guid: e7156e007cd599346bff14f06e0133d4, type: 2}
+  deathEvent: {fileID: 11400000, guid: 2cf55dfe3122e2b488fef00e25130745, type: 2}
 --- !u!1001 &9107268686753729628
 PrefabInstance:
   m_ObjectHideFlags: 0
