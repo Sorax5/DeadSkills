@@ -10086,7 +10086,7 @@ Transform:
   m_GameObject: {fileID: 1168874148}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6404699, y: 10, z: -21.4}
+  m_LocalPosition: {x: 0.6404699, y: 9.76, z: -21.4}
   m_LocalScale: {x: 63.569134, y: 0.160324, z: -41.17356}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15650,6 +15650,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -92
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: fb8bfa76cad50d3438e3f114eec13196, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 855afa661e52029449bd23a4c023974e, type: 2}
     - target: {fileID: 919132149155446097, guid: fb8bfa76cad50d3438e3f114eec13196, type: 3}
       propertyPath: m_Name
       value: grue
