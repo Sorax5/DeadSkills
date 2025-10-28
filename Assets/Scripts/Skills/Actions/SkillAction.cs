@@ -9,7 +9,7 @@ public abstract class SkillAction
         this.Controller = controller;
     }
 
-    public abstract int Identifier { get; }
+    public abstract Skills Identifier { get; }
     public abstract bool IsActive { get; set; }
 
     public abstract void Start();

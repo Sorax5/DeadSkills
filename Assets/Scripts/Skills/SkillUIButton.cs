@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,15 +19,12 @@ public class SkillUIButton : MonoBehaviour
     public Color unlockedColor;
     public Color unlockableColor;
 
-
     // Skill Data
     public GameEvent unlockEvent;
     private Skills skill;
 
     private void Start()
     {
-        Debug.Log($"[{name}] unlockedColor = {unlockedColor}, lockedColor = {lockedColor}, unlockableColor = {unlockableColor}");
-
 
         // Fill the UI texts
         title.text = skillData.skillName;
@@ -34,22 +32,22 @@ public class SkillUIButton : MonoBehaviour
         unlockCondition.text = skillData.linkedDeath.deathDescription;
         skill = skillData.skill;
 
-        // TODO Add a childskill to skill data, populated by child at awake to their parent skill, then the parent can call canBeUnlocked on their child once they are unlocked
+
     }
 
     // On displaying the Skill Tree check which skill can be unlocked
-    private void OnEnable(){ canBeUnlocked(); }
+    private void OnEnable(){ UpdateUI(); }
 
     // Called when the Skill Tree is displayed or when an other skill is unlocked
-    public void canBeUnlocked()
+    public void UpdateUI()
     {
         // Blue if skill unlocked, red if not unlockable, white if unlockable
         if (skillData.isUnlocked) 
-            ChangeColor(Color.blue);
+            ChangeColor(unlockedColor);
         else if (!skillData.canBeUnlocked()) 
-            ChangeColor(Color.red);
+            ChangeColor(lockedColor);
         else 
-            ChangeColor(Color.white);
+            ChangeColor(unlockableColor);
         
     }
 
@@ -62,11 +60,12 @@ public class SkillUIButton : MonoBehaviour
         if (skillData.canBeUnlocked() && !skillData.isUnlocked)
         {
             if (GameManager.Instance.GetSkillPoints() > 0){
-                Debug.Log("Skill débloqué : " + skillData.skillName);
                 GameManager.Instance.SkillPointDecrease();
                 skillData.isUnlocked = true;
                 unlockEvent.Raise(this, skill);
-                ChangeColor(Color.blue);
+
+                // Update the UI
+                ChangeColor(unlockedColor);
             }
  
         }

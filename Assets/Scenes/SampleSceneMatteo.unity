@@ -6836,7 +6836,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   playerSpawnPosition: {x: 0.46, y: 3.58, z: 0}
   playerTag: Player
-  SkillPoints: 0
+  ui_Manager: {fileID: 0}
+  skillPoints: 0
   playerInstance: {fileID: 0}
 --- !u!4 &1228260542
 Transform:
@@ -13367,6 +13368,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
+      propertyPath: followDistance
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 757070687425742676, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: SplineContainer
       value: 
       objectReference: {fileID: 27950876}
@@ -13445,22 +13450,6 @@ PrefabInstance:
     - target: {fileID: 1809967370886835351, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849583498818606938, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
-      propertyPath: m_Size.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849583498818606938, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
-      propertyPath: m_Size.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849583498818606938, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
-      propertyPath: m_Size.z
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849583498818606938, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
-      propertyPath: m_Center.y
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4383588808921985604, guid: ba715cd159797ac4797ab72b04bea731, type: 3}
       propertyPath: m_Name
