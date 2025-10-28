@@ -1,10 +1,8 @@
-using System.Collections;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LightningSkill : SkillAction
 {
-    private bool isActive = true;
+    private bool isActive = false;
     private InputAction lightningAction;
     private ElectricState electricState;
 
@@ -13,7 +11,7 @@ public class LightningSkill : SkillAction
         this.lightningAction = lightningAction;
     }
 
-    public override int Identifier => 0;
+    public override Skills Identifier => Skills.LetThereBeLight;
 
     public override bool IsActive { get { return isActive; } set { isActive = value; } }
 

@@ -20,12 +20,12 @@ public class MoveState : InputState
     {
         Input.actions.FindAction("Move").performed += OnMove;
         Input.actions.FindAction("Move").canceled += OnMoveCanceled;
-        //animator.Play("Walk");
-        Debug.Log("ahahahaha");
+        animator.SetBool("IsMoving", true);
     }
 
     public override void Exit()
     {
+        animator.SetBool("IsMoving", false);
         Input.actions.FindAction("Move").performed -= OnMove;
         Input.actions.FindAction("Move").canceled -= OnMoveCanceled;
         moveInput = Vector2.zero;

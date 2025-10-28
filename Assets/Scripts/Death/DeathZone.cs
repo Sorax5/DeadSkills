@@ -8,7 +8,8 @@ public class DeathZone : MonoBehaviour
     public UnityEvent LocalPlayerDeath;
 
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private DeathData Deaths;
+    [SerializeField] private DeathData Deaths;  
+    [SerializeField] private GameEvent deathEvent; 
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +17,8 @@ public class DeathZone : MonoBehaviour
         {
             Debug.Log("Player has died in DeathZone: " + Deaths.ToString());
             LocalPlayerDeath?.Invoke();
-            GameManager.Instance.OnPlayerDeath(this, Deaths);
+            Debug.Log("Raising global death event.");
+            deathEvent?.Raise(this, Deaths);
         }
     }
 }
