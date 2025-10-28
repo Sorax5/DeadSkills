@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3796840875384949904}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: -0, z: -0, w: 0.0000014007092}
-  m_LocalPosition: {x: -0.0049755094, y: -0.013505305, z: 0.0009105992}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0005, y: 0.010000001, z: 0.0005}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -182,7 +182,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2606956380192799100}
-  - component: {fileID: 7619021709617982576}
   - component: {fileID: 8448252776215433346}
   - component: {fileID: 6901099554743289239}
   - component: {fileID: 8084717424276471210}
@@ -214,29 +213,6 @@ Transform:
   - {fileID: 5192128946748226257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7619021709617982576
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7676550405470121069}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &8448252776215433346
 CharacterController:
   m_ObjectHideFlags: 0
@@ -255,7 +231,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 2.37
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -307,6 +283,7 @@ MonoBehaviour:
   characterController: {fileID: 8448252776215433346}
   playerInput: {fileID: 6901099554743289239}
   cameraTransform: {fileID: 0}
+  animator: {fileID: 0}
   Speed: 5
   SprintSpeed: 8
   JumpForce: 5
@@ -315,6 +292,7 @@ MonoBehaviour:
   CrouchHeight: 1
   MoveThreshold: 0.1
   CurrentState: NONE
+  IsEnabled: 1
   LongJumpForwardBoost: 10
   LongJumpUpwardBoost: 8
   CoyoteTime: 0.2
@@ -481,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 97e11a5a9d197d341bd43549a29dba98, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 97e11a5a9d197d341bd43549a29dba98, type: 3}
       propertyPath: m_LocalPosition.z
