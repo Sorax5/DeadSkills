@@ -13,11 +13,9 @@ public class CrouchState : InputState
     // sliding
     private bool sliding;
     private float currentSlideVelocity;
-    private readonly float slideStartSpeedMultiplier = 1.2f; // start slide slightly faster than crouch move
-    private readonly float slideDecay = 3f; // how fast slide slows when not holding forward
+    private readonly float slideDecay = 3f;
     private readonly float minSlideVelocity = 0.1f;
 
-    // allow external request to begin slide at Enter()
     private float pendingSlideVelocity = 0f;
 
     public CrouchState(CharacterController controller, PlayerInput playerInput, float crouchHeight, float standHeight, float speed, float gravity) : base(controller, playerInput)
@@ -62,6 +60,7 @@ public class CrouchState : InputState
         currentSlideVelocity = 0f;
         pendingSlideVelocity = 0f;
         animator.SetBool("IsCrouch", false);
+        animator.SetBool("IsSliding", false);
     }
 
     public override void FixedUpdate()
@@ -70,11 +69,12 @@ public class CrouchState : InputState
 
     public override void Update()
     {
+        animator.SetBool("IsSliding", sliding);
         Vector2 moveInput = Input.actions["Move"].ReadValue<Vector2>();
         
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (moveInput.magnitude > 0.001 && !stateInfo.IsName("WalkCrouch"))
+        if (moveInput.magnitude > 0.001 && !stateInfo.IsName("WalkCrouch") && !IsSliding())
         {
             animator.SetTrigger("WalkCrouch");
         }
@@ -121,7 +121,6 @@ public class CrouchState : InputState
                 horizontal = Vector3.zero;
             }
         }
-        animator.SetBool("Slide", sliding);
 
         Vector3 vertical = Vector3.zero;
         if (!Controller.isGrounded)
