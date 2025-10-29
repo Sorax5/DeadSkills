@@ -9,6 +9,7 @@ public class Ui_manager : MonoBehaviour
     public GameObject skillTreeMenu;
     public GameObject settingsMenu;
     public GameObject buttonCloseAll;
+    public GameObject deathScreen; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -69,7 +70,7 @@ public class Ui_manager : MonoBehaviour
             Time.timeScale = 0f;
         }
     }
-    
+
     public void hideAll()
     {
         if (settingsMenu.activeInHierarchy)
@@ -85,5 +86,16 @@ public class Ui_manager : MonoBehaviour
             buttonCloseAll.SetActive(false);
             Time.timeScale = 1f;
         }
+    }
+
+    public void ShowDeathScreen(DeathData deathData)
+    {
+        deathScreen.GetComponent<DeathScreen>().deathData = deathData;
+        deathScreen.SetActive(true);
+    }
+    
+    public void HideDeathScreen()
+    {
+        deathScreen.SetActive(false);
     }
 }

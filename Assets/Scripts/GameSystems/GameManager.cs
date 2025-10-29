@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int skillPoints;
 
     public GameObject playerInstance;
+    public float respawnTime;
 
     private void Awake()
     {
@@ -39,14 +40,24 @@ public class GameManager : MonoBehaviour
 
         if (playerInstance != null)
         {
-            TeleportPlayer(respawnAnchor.transform.position);
-            ui_Manager.showOrHideSkillMenu();
+            playerInstance.GetComponent<PlayerController>().SetRagdoll(true);
+            ui_Manager.ShowDeathScreen(deathData);
+            StartCoroutine(Respawn());
         }
         else
         {
             Debug.LogWarning("Player instance is null during respawn.");
         }
 
+    }
+
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        playerInstance.GetComponent<PlayerController>().SetRagdoll(false);
+        ui_Manager.HideDeathScreen();
+        TeleportPlayer(respawnAnchor.transform.position);
+        ui_Manager.showOrHideSkillMenu();
     }
 
     private void FetchPlayerInScene()
