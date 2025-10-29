@@ -358,7 +358,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6180631771516924305}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6475095007246306632}
+        m_TargetAssemblyTypeName: Ui_manager, Assembly-CSharp
+        m_MethodName: QuitFunc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &658505982826803148
 GameObject:
   m_ObjectHideFlags: 0
