@@ -20,6 +20,7 @@ public class SprintState : InputState
     {
         Input.actions.FindAction("Move").performed += OnMove;
         Input.actions.FindAction("Move").canceled += OnMoveCanceled;
+        animator.SetBool("IsSprinting", true);
     }
 
     public override void Exit()
@@ -27,6 +28,7 @@ public class SprintState : InputState
         Input.actions.FindAction("Move").performed -= OnMove;
         Input.actions.FindAction("Move").canceled -= OnMoveCanceled;
         moveInput = Vector2.zero;
+        animator.SetBool("IsSprinting", false);
     }
 
     public override void FixedUpdate()
