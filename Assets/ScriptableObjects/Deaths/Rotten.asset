@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbfcb3b5c8483b048b6ab9b76a728c36, type: 3}
-  m_Name: Seringue
+  m_Name: Rotten
   m_EditorClassIdentifier: Assembly-CSharp::DeathData
   death: 7
-  deathName: Crackhead
-  deathDescription: 'Alors on succombe a ces adiction ? '
+  deathName: The cake is a lie
+  deathDescription: "CHEH ! Ta cru t'\xE9tait dans minecraft ??"
   hasBeenAchieved: 0
