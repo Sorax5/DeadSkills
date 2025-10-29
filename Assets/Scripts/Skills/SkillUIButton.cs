@@ -12,10 +12,12 @@ public class SkillUIButton : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI description;
     public TextMeshProUGUI unlockCondition;
+    public TextMeshProUGUI gameJamLockedText;
     public Image image;
 
     // Skill color
     public Color lockedColor;
+    public Color gameJamLockedColor;
     public Color unlockedColor;
     public Color unlockableColor;
 
@@ -32,6 +34,10 @@ public class SkillUIButton : MonoBehaviour
         unlockCondition.text = skillData.linkedDeath.deathDescription;
         skill = skillData.skill;
 
+        // Display if we did not have the time
+        if (skillData.gameJamLocked)
+            gameJamLockedText.gameObject.SetActive(true);
+
 
     }
 
@@ -42,11 +48,13 @@ public class SkillUIButton : MonoBehaviour
     public void UpdateUI()
     {
         // Blue if skill unlocked, red if not unlockable, white if unlockable
-        if (skillData.isUnlocked) 
+        if (skillData.gameJamLocked)
+            ChangeColor(gameJamLockedColor);
+        else if (skillData.isUnlocked)
             ChangeColor(unlockedColor);
-        else if (!skillData.canBeUnlocked()) 
+        else if (!skillData.canBeUnlocked())
             ChangeColor(lockedColor);
-        else 
+        else
             ChangeColor(unlockableColor);
         
     }
@@ -57,7 +65,7 @@ public class SkillUIButton : MonoBehaviour
     {
         // TODO Add the check that there's an available skill point (stored in game event, game event listen to death event when one that hasNotBeenAchieved yet is sent get a point
         // If the skill is unlockable and not yet unlocked
-        if (skillData.canBeUnlocked() && !skillData.isUnlocked)
+        if (skillData.canBeUnlocked() && !skillData.isUnlocked && !skillData.gameJamLocked)
         {
             if (GameManager.Instance.GetSkillPoints() > 0){
                 GameManager.Instance.SkillPointDecrease();
