@@ -12,6 +12,7 @@ public class SkillData : ScriptableObject
     public string skillDescription;
     public SkillData[] parentSkills;
     public bool isUnlocked;
+    public bool gameJamLocked;
 
     public bool canBeUnlocked()
     {
