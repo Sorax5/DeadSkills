@@ -18,3 +18,4 @@ MonoBehaviour:
   skillDescription: "Les doigts dans la prise on est des mcs branch\xE9s"
   parentSkills: []
   isUnlocked: 0
+  gameJamLocked: 1
