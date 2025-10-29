@@ -47,7 +47,10 @@ public class PlayerController : MonoBehaviour
     private float lastJumpPressedTime = -Mathf.Infinity;
 
     //ragdoll
-    private bool ragdollActive=false;
+    private bool ragdollActive = false;
+
+    //interact
+    [HideInInspector]public bool canInteract = false;
 
     private void Awake()
     {
@@ -146,6 +149,7 @@ public class PlayerController : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), 0.1f);
                 }
             }
+
             /*Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
             mesh.transform.forward = (mesh.transform.position + new Vector3(moveInput.x,0,moveInput.y).normalized).normalized;
         */
