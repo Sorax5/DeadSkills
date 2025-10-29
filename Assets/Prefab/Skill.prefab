@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 878433264191281705}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -170,7 +170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000022888184, y: -73.5}
+  m_AnchoredPosition: {x: 0.000022888184, y: -79.3}
   m_SizeDelta: {x: 390, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6568814160123668673
@@ -308,8 +308,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3.5}
-  m_SizeDelta: {x: 390, y: 100}
+  m_AnchoredPosition: {x: 0, y: -40.4}
+  m_SizeDelta: {x: 390, y: 74.5738}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4597956503364155106
 CanvasRenderer:
@@ -573,7 +573,6 @@ MonoBehaviour:
   unlockedColor: {r: 0, g: 0.11046505, b: 1, a: 1}
   unlockableColor: {r: 1, g: 1, b: 1, a: 1}
   unlockEvent: {fileID: 11400000, guid: 3acb5eba4d0be9d41b0588adbe38fb29, type: 2}
-  gameJamLocked: 0
 --- !u!114 &-28227033321759204
 MonoBehaviour:
   m_ObjectHideFlags: 0
