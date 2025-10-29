@@ -15,4 +15,4 @@ MonoBehaviour:
   death: 0
   deathName: Joe Black
   deathDescription: Well you died so ...
-  hasBeenAchieved: 1
+  hasBeenAchieved: 0

@@ -17,4 +17,5 @@ MonoBehaviour:
   skillName: "Immunit\xE9 aux d\xE9g\xE2ts de chute"
   skillDescription: "Le joueur est immunis\xE9 aux d\xE9g\xE2ts de chute"
   parentSkills: []
-  isUnlocked: 1
+  isUnlocked: 0
+  gameJamLocked: 0
