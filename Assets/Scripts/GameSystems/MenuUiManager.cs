@@ -7,6 +7,7 @@ public class MenuUiManager : MonoBehaviour
 {
     public string gameScene;
     public GameObject settings;
+    public GameObject main;
     public void LoadGame()
     {
         SceneManager.LoadScene(gameScene);
@@ -19,6 +20,16 @@ public class MenuUiManager : MonoBehaviour
 
     public void HideSettings()
     {
-        settings.SetActive(false);   
+        settings.SetActive(false);
+    }
+
+    public void ShowMain()
+    {
+        main.SetActive(true);
+    }
+
+    public void HideMain()
+    {
+        main.SetActive(false);
     }
 }
