@@ -15,4 +15,4 @@ MonoBehaviour:
   death: 7
   deathName: 
   deathDescription: 
-  hasBeenAchieved: 1
+  hasBeenAchieved: 0
