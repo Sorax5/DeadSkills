@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class SprintSkill : SkillAction
 {
-    private bool isActive = false;
+    private bool isActive = true;
 
     public SprintSkill(SkillsActionController controller) : base(controller)
     {

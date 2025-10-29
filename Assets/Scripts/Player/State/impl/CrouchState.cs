@@ -121,6 +121,7 @@ public class CrouchState : InputState
                 horizontal = Vector3.zero;
             }
         }
+        animator.SetBool("Slide", sliding);
 
         Vector3 vertical = Vector3.zero;
         if (!Controller.isGrounded)

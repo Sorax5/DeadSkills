@@ -3,7 +3,52 @@ guid: 5e3b69775a3c6804e925465256c3cb99
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bocal
+    second: {fileID: 2100000, guid: 6dd8efb38285195478b9e5b70a23fa6f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Casque
+    second: {fileID: 2100000, guid: 0fe65d95211854146849cc46d33a5c2a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gant
+    second: {fileID: 2100000, guid: ac36a2b91de9cd44383804b2c0beb188, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Noir
+    second: {fileID: 2100000, guid: ba4fd7b7ad6b89545aafdf3e644b3d6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TransiCasque
+    second: {fileID: 2100000, guid: d2cf5d797ab0a384fbb6ae1460c3dbea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Vertoeil
+    second: {fileID: 2100000, guid: ded6c1dbf4dba2c4d9af0e03a8335121, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: noiroeil
+    second: {fileID: 2100000, guid: 03599de05643a4d458d680c52f692af7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: peau.001
+    second: {fileID: 2100000, guid: 09cc245b5c334dc4597a18987c7796eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yea
+    second: {fileID: 2100000, guid: bd60d6a0dce27424f92040a171760db7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

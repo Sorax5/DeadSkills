@@ -53,6 +53,7 @@ public class MoveState : InputState
         }
 
         Controller.Move(horizontal + vertical);
+    
     }
 
     private void OnMove(InputAction.CallbackContext ctx)

@@ -2,7 +2,7 @@ using UnityEngine.InputSystem;
 
 public class LightningSkill : SkillAction
 {
-    private bool isActive = false;
+    private bool isActive = true;
     private InputAction lightningAction;
     private ElectricState electricState;
 
@@ -30,6 +30,8 @@ public class LightningSkill : SkillAction
         {
             StateMachine stateMachine = Controller.PlayerController.stateMachine;
             stateMachine.SetState(electricState);
+
+            Controller.ElectrifyController.EnableElectrify();
             Controller.PlayerEffect.PlayerElectricityEffect();
         }
     }

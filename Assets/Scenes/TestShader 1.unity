@@ -2037,11 +2037,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &590645277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3044911919447747887, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
-  m_PrefabInstance: {fileID: 7226003235570783688}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &697643247
 Mesh:
   m_ObjectHideFlags: 0
@@ -12286,7 +12281,7 @@ MonoBehaviour:
   playerTag: Player
   Deaths: {fileID: 11400000, guid: 3063c4c90311bcf44b7a14e4e0e41ab4, type: 2}
   deathEvent: {fileID: 11400000, guid: 2cf55dfe3122e2b488fef00e25130745, type: 2}
-  deathImmunity: {fileID: 11400000, guid: d04d92f15bb1fc44e8c6cb1d77a0fe08, type: 2}
+  deathImmunity: {fileID: 0}
 --- !u!65 &2010665485
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12492,18 +12487,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6475095007246306632, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
-      propertyPath: skillTreeMenu
-      value: 
-      objectReference: {fileID: 590645277}
-    - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
-      propertyPath: respawnTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
-      propertyPath: skillPoints
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
       propertyPath: respawnAnchor
       value: 
@@ -12513,8 +12496,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 196395022}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 8771731976737403869, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
