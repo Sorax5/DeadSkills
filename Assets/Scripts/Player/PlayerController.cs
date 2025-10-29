@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour
     private float lastGroundedTime = -Mathf.Infinity;
     private float lastJumpPressedTime = -Mathf.Infinity;
 
+    //ragdoll
+    private bool ragdollActive=false;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -53,6 +56,24 @@ public class PlayerController : MonoBehaviour
         cameraTransform = Camera.main != null ? Camera.main.transform : null;
         this.stateMachine = new StateMachine();
         this.stateMachine.animator = animator;
+        SetRagdoll(true);
+    }
+    public void SetRagdoll(bool active)
+    {
+        ragdollActive = active;
+
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = !active; 
+        }
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = active;
+        }
+        animator.enabled = !active;
     }
 
     private void Start()
@@ -95,37 +116,41 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!IsEnabled)
+        if (!ragdollActive)
         {
-            return;
-        }
-        // track jump press for buffer - update while holding so player can hold space to auto-jump on landing
-        if (jumpAction != null && jumpAction.IsPressed())
-        {
-            lastJumpPressedTime = Time.time;
-        }
-
-        // track grounded time for coyote
-        if (characterController.isGrounded)
-        {
-            lastGroundedTime = Time.time;
-        }
-
-        stateMachine.Update();
-        CurrentState = stateMachine.CurrentState != null ? stateMachine.CurrentState.Name : "NONE";
-
-        if (cameraTransform != null)
-        {
-            Vector3 forward = cameraTransform.forward;
-            forward.y = 0;
-            if (forward.sqrMagnitude > 0.01f)
+            if (!IsEnabled)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), 0.1f);
+                return;
             }
+            // track jump press for buffer - update while holding so player can hold space to auto-jump on landing
+            if (jumpAction != null && jumpAction.IsPressed())
+            {
+                lastJumpPressedTime = Time.time;
+            }
+
+            // track grounded time for coyote
+            if (characterController.isGrounded)
+            {
+                lastGroundedTime = Time.time;
+            }
+
+            stateMachine.Update();
+            CurrentState = stateMachine.CurrentState != null ? stateMachine.CurrentState.Name : "NONE";
+
+            if (cameraTransform != null)
+            {
+                Vector3 forward = cameraTransform.forward;
+                forward.y = 0;
+                if (forward.sqrMagnitude > 0.01f)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), 0.1f);
+                }
+            }
+            /*Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+            mesh.transform.forward = (mesh.transform.position + new Vector3(moveInput.x,0,moveInput.y).normalized).normalized;
+        */
         }
-        /*Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
-        mesh.transform.forward = (mesh.transform.position + new Vector3(moveInput.x,0,moveInput.y).normalized).normalized;
-*/
+
     }
  
     private void FixedUpdate()
