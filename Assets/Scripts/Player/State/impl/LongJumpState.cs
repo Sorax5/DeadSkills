@@ -9,7 +9,6 @@ public class LongJumpState : InputState
     private readonly float moveSpeed;
 
     private Vector3 initialVelocity;
-    private float duration = 0.6f;
     private float startTime;
 
     public LongJumpState(CharacterController controller, PlayerInput input, float forwardBoost, float upwardBoost, float gravity, float moveSpeed) : base(controller, input)
