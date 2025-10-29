@@ -6079,6 +6079,52 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &986607163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7504992644674641392, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
+  m_PrefabInstance: {fileID: 7226003235570783688}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &986607168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986607163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae4fb9d3e5c483418d78915460cf1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillPointDisplay
+  skillPointDisplay: {fileID: 0}
+--- !u!114 &986607169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986607163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45df1fccd4d1124f9b672b7dd895e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventListener
+  gameEvent: {fileID: 11400000, guid: 3acb5eba4d0be9d41b0588adbe38fb29, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 986607168}
+        m_TargetAssemblyTypeName: SkillPointDisplay, Assembly-CSharp
+        m_MethodName: UpdateSkillPointDisplay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1340550810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12212,6 +12258,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1978408074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1978408075}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1978408075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978408074}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.18354, y: 0.7444, z: 8.7728}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010665483
 GameObject:
   m_ObjectHideFlags: 0
@@ -12457,16 +12534,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
       propertyPath: skillPoints
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
+      propertyPath: respawnAnchor
+      value: 
+      objectReference: {fileID: 1978408074}
     - target: {fileID: 7764870507547222424, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
       propertyPath: playerInstance
       value: 
       objectReference: {fileID: 196395022}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8771731976737403869, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7504992644674641392, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986607168}
+    - targetCorrespondingSourceObject: {fileID: 7504992644674641392, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986607169}
   m_SourcePrefab: {fileID: 100100000, guid: d8b4e6de5f1e567429783657740f1d70, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -12487,3 +12575,4 @@ SceneRoots:
   - {fileID: 7226003235570783688}
   - {fileID: 2010665488}
   - {fileID: 765169736}
+  - {fileID: 1978408075}
