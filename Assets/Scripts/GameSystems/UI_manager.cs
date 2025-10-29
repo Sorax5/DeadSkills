@@ -98,4 +98,6 @@ public class Ui_manager : MonoBehaviour
     {
         deathScreen.SetActive(false);
     }
+
+    public void QuitFunc(){ Application.Quit(); }
 }

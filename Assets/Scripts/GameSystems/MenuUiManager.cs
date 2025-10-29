@@ -32,4 +32,7 @@ public class MenuUiManager : MonoBehaviour
     {
         main.SetActive(false);
     }
+
+    public void QuitFunc(){ Application.Quit(); }
 }
+
