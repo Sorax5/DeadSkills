@@ -56,24 +56,24 @@ public class PlayerController : MonoBehaviour
         cameraTransform = Camera.main != null ? Camera.main.transform : null;
         this.stateMachine = new StateMachine();
         this.stateMachine.animator = animator;
-        SetRagdoll(true);
+        SetRagdoll(false);
     }
     public void SetRagdoll(bool active)
     {
         ragdollActive = active;
+        animator.enabled = !active;
 
         Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rb in rigidbodies)
         {
-            rb.isKinematic = !active; 
+            if(rb.gameObject!=gameObject)rb.isKinematic = !active; 
         }
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
         {
-            col.enabled = active;
+            if(col.gameObject!=gameObject)col.enabled = active;
         }
-        animator.enabled = !active;
     }
 
     private void Start()

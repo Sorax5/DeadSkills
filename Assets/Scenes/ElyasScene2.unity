@@ -8477,22 +8477,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4854827045985877767, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4854827045985877767, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4854827045985877767, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7619021709617982576, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7676550405470121069, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
       propertyPath: m_Name
       value: NeoPlayer
@@ -8501,18 +8485,6 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 46322045}
-    - target: {fileID: 8448252776215433346, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_Height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8448252776215433346, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8448252776215433346, guid: cd2da3eed9c091a4c8d140e5486dcb33, type: 3}
-      propertyPath: m_Center.y
-      value: 0.91
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
