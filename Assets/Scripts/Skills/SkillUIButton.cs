@@ -12,7 +12,7 @@ public class SkillUIButton : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI description;
     public TextMeshProUGUI unlockCondition;
-    public TextMeshProUGUI gameJamLockedText;
+    public GameObject gameJamLocked;
     public Image image;
 
     // Skill color
@@ -36,7 +36,7 @@ public class SkillUIButton : MonoBehaviour
 
         // Display if we did not have the time
         if (skillData.gameJamLocked)
-            gameJamLockedText.gameObject.SetActive(true);
+            gameJamLocked.gameObject.SetActive(true);
 
 
     }
