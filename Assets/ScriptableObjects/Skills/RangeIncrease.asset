@@ -19,3 +19,4 @@ MonoBehaviour:
   parentSkills:
   - {fileID: 11400000, guid: a43d8aeb15302354f8d7645af025c99f, type: 2}
   isUnlocked: 0
+  gameJamLocked: 1

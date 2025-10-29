@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a839a89aa8559c444af1a3fcea29d884, type: 2}
   - {fileID: 11400000, guid: a43d8aeb15302354f8d7645af025c99f, type: 2}
   isUnlocked: 0
+  gameJamLocked: 1
