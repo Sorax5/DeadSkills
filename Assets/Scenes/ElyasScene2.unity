@@ -2157,6 +2157,7 @@ MonoBehaviour:
   playerTag: Player
   Deaths: {fileID: 11400000, guid: 220ca63484a876649bdb7a5ab0039615, type: 2}
   deathEvent: {fileID: 11400000, guid: 2cf55dfe3122e2b488fef00e25130745, type: 2}
+  deathImmunity: {fileID: 0}
 --- !u!65 &608036681
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12731,6 +12732,7 @@ MonoBehaviour:
   playerTag: Player
   Deaths: {fileID: 11400000, guid: aec18ca1daad4834fbdfd6739c36ee78, type: 2}
   deathEvent: {fileID: 0}
+  deathImmunity: {fileID: 0}
 --- !u!65 &2010665485
 BoxCollider:
   m_ObjectHideFlags: 0
