@@ -3,7 +3,17 @@ guid: fed4d68c6c3026c4bb3fddf3c1b6ce54
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blanc
+    second: {fileID: 2100000, guid: cf1cf987da08f3a47ac8905534838622, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: barriere
+    second: {fileID: 2100000, guid: 187fa4ee6a07d4345b3b69a3c8faf90c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
