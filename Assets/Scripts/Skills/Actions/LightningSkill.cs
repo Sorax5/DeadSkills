@@ -18,7 +18,7 @@ public class LightningSkill : SkillAction
     public override void Start()
     {
         StateMachine stateMachine = Controller.PlayerController.stateMachine;
-        this.electricState = new ElectricState(Controller.CharacterController, Controller.PlayerInput, System.TimeSpan.FromSeconds(2), Controller.PlayerController.Gravity);
+        this.electricState = new ElectricState(Controller.CharacterController, Controller.PlayerInput, System.TimeSpan.FromSeconds(0.1), Controller.PlayerController.Gravity);
         stateMachine.AddState(electricState);
 
         stateMachine.AddTransition(electricState.Name, "IDLE", () => electricState.IsDurationOver());
