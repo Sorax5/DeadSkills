@@ -118,7 +118,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -289,7 +289,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -606,7 +606,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 500
+    maxNumParticles: 10
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -4849,8 +4849,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 28.226162, y: 5.592698, z: 6.000263}
-  m_Center: {x: 16.684504, y: 1.4406962, z: 0.11766338}
+  m_Size: {x: 6, y: 0.3, z: 0.2}
+  m_Center: {x: 3, y: 0, z: 0}
 --- !u!114 &331608359811050859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4869,3 +4869,4 @@ MonoBehaviour:
   playerTag: Player
   Deaths: {fileID: 11400000, guid: 7c2277631cc67cf499252f4b9f0a88f6, type: 2}
   deathEvent: {fileID: 11400000, guid: 2cf55dfe3122e2b488fef00e25130745, type: 2}
+  deathImmunity: {fileID: 0}
