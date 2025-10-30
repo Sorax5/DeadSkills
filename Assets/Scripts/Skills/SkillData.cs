@@ -1,3 +1,5 @@
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SkillData")]
@@ -29,3 +31,43 @@ public class SkillData : ScriptableObject
         return true;
     }
 }
+
+#if UNITY_EDITOR
+[InitializeOnLoad]
+public static class SkillDataResetter
+{
+    static SkillDataResetter()
+    {
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
+
+    private static Dictionary<SkillData, string> backups = new Dictionary<SkillData, string>();
+
+    private static void OnPlayModeStateChanged(PlayModeStateChange state)
+    {
+        switch (state)
+        {
+            case PlayModeStateChange.EnteredPlayMode:
+                backups.Clear();
+                foreach (var skill in Resources.FindObjectsOfTypeAll<SkillData>())
+                    backups[skill] = JsonUtility.ToJson(skill);
+                break;
+
+            case PlayModeStateChange.ExitingPlayMode:
+                foreach (var kv in backups)
+                {
+                    var skill = kv.Key;
+                    JsonUtility.FromJsonOverwrite(kv.Value, skill);
+                    skill.isUnlocked = false;
+
+                    EditorUtility.SetDirty(skill);
+                }
+
+                backups.Clear();
+                AssetDatabase.SaveAssets();
+                Debug.Log("🔁 Tous les SkillData ont été réinitialisés après le Play Mode.");
+                break;
+        }
+    }
+}
+#endif

@@ -18,3 +18,4 @@ MonoBehaviour:
   skillDescription: J'ai mal aux genoux
   parentSkills: []
   isUnlocked: 0
+  gameJamLocked: 0
