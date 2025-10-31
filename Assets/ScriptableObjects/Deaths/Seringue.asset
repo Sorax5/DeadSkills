@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Seringue
   m_EditorClassIdentifier: Assembly-CSharp::DeathData
   death: 7
-  deathName: 
-  deathDescription: 
-  hasBeenAchieved: 1
+  deathName: Crackhead
+  deathDescription: 'Alors on succombe a ces adiction ? '
+  hasBeenAchieved: 0

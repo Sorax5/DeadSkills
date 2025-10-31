@@ -3,7 +3,12 @@ guid: bccc769a1c6e2e44282ed72424a39d53
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kyou
+    second: {fileID: 2100000, guid: bb271d4b587c6ac459b29926fb53e51f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

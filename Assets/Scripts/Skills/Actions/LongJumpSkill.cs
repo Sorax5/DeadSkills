@@ -4,7 +4,7 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class LongJumpSkill : SkillAction
 {
-    private bool isActive = true;
+    private bool isActive = false;
     public LongJumpSkill(SkillsActionController controller) : base(controller)
     {
     }

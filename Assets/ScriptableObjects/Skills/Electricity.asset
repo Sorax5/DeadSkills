@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb12decfdcb7634788cad7ab5b0e54c, type: 3}
   m_Name: Electricity
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skill: 11
+  skill: 1
   linkedDeath: {fileID: 11400000, guid: 3926e1b1532f9504f83bffcd41f65f56, type: 2}
   skillName: Unlimited Power
   skillDescription: "Les doigts dans la prise on est des mcs branch\xE9s"
   parentSkills: []
   isUnlocked: 0
+  gameJamLocked: 0

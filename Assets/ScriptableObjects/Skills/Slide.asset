@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Slide
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skill: 5
-  linkedDeath: {fileID: 11400000, guid: ca1a9e26bf9d1df40a19129492d60d22, type: 2}
+  linkedDeath: {fileID: 11400000, guid: e7156e007cd599346bff14f06e0133d4, type: 2}
   skillName: Slide
   skillDescription: "J'ai gliss\xE9 chef"
   parentSkills:
   - {fileID: 11400000, guid: 5506313385af3aa42b39caf050f0d18f, type: 2}
   - {fileID: 11400000, guid: c4fbb9ea14437be429967b2141721eff, type: 2}
   isUnlocked: 0
+  gameJamLocked: 0

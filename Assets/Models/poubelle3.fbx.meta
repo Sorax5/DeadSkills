@@ -3,7 +3,12 @@ guid: 6c7bb91a298ad1b4e9df907cc4917202
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sac Poubelle
+    second: {fileID: 2100000, guid: b7ef2fae9f579634d9fb9cd442b40f89, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

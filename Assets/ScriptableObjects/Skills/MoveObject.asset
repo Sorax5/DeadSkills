@@ -18,3 +18,4 @@ MonoBehaviour:
   skillDescription: Damn les gens
   parentSkills: []
   isUnlocked: 0
+  gameJamLocked: 1

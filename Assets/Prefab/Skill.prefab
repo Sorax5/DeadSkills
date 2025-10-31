@@ -680,10 +680,10 @@ MonoBehaviour:
   unlockCondition: {fileID: 932319807075729089}
   gameJamLocked: {fileID: 7870491990547720566}
   image: {fileID: 522871113155489905}
-  lockedColor: {r: 1, g: 0.042452812, b: 0.042452812, a: 1}
+  lockedColor: {r: 0.9150943, g: 0.53092736, b: 0.53092736, a: 1}
   gameJamLockedColor: {r: 1, g: 0.8968996, b: 0.042452812, a: 1}
-  unlockedColor: {r: 0, g: 0.11046505, b: 1, a: 1}
-  unlockableColor: {r: 1, g: 1, b: 1, a: 1}
+  unlockedColor: {r: 0.7809719, g: 0.8490566, b: 0.7866456, a: 1}
+  unlockableColor: {r: 0.37459952, g: 0.4339623, b: 0.3795464, a: 1}
   unlockEvent: {fileID: 11400000, guid: 3acb5eba4d0be9d41b0588adbe38fb29, type: 2}
 --- !u!114 &-28227033321759204
 MonoBehaviour:

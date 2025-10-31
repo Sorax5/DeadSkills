@@ -1,10 +1,9 @@
-using Unity.IO.LowLevel.Unsafe;
+
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SprintSkill : SkillAction
 {
-    private bool isActive = true;
+    private bool isActive = false;
 
     public SprintSkill(SkillsActionController controller) : base(controller)
     {

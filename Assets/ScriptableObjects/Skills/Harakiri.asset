@@ -18,3 +18,4 @@ MonoBehaviour:
   skillDescription: "\xE7a fait un peu d\xE9sordre"
   parentSkills: []
   isUnlocked: 0
+  gameJamLocked: 1
